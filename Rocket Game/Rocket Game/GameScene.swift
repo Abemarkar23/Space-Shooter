@@ -20,10 +20,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var bulletsArray = [SKSpriteNode]()
     var bulletTimer : Timer!
+    var asteroidTimer : Timer!
     
-    var enemiesArray = [SKSpriteNode]()
-    let numberOfEnemies : UInt8 = 20
-    let possibleEnemyImage : [String] = ["spaceMeteors_001", "spaceMeteors_002", "spaceMeteors_003", "spaceMeteors_004"]
+    let numberOfAsteroid : UInt8 = 30 // Default = 30
+    let  possibleAsteroidImage : [String] = ["spaceMeteors_001", "spaceMeteors_002", "spaceMeteors_003", "spaceMeteors_004"]
+    
+    let bulletSpeed : TimeInterval = 6
+    let bulletProductionRate : TimeInterval = 0.5
+    
+    let asteroidSpeed : TimeInterval = 6
+    let asteroidProductionRate : TimeInterval = 0.75
     
     var scoreLabel : SKLabelNode!
     var score : Int = 0 {
@@ -31,9 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "Score : \(score)"
         }
     }
-    
-    let enemyCategory:    UInt32 = 1 << 1
-    let bulletCategory:   UInt32 = 1 << 2
+    let asteroidCategory:UInt32 = 0x1 << 1
+    let bulletCategory:UInt32 = 0x1 << 0
     
     func MovePlayer(direction: Bool) {
         
@@ -59,53 +64,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(player)
     }
     
-    @objc func CreateNewEnemy() {
-        var enemy : SKSpriteNode?
-        
-        let moveEnemyDown = SKAction.repeatForever(SKAction.moveBy(x: 0, y: -1, duration: 0.01))
-        let rotateEnemy = SKAction.repeatForever(SKAction.rotate(byAngle: 25, duration: 5))
-        
-        let enemyXpos = randomNum(high:  self.frame.size.width/2, low: -1 * self.frame.size.width/2)
-        let enemyYpos = randomNum(high:  2.5*self.frame.size.height, low: self.frame.size.height/2)
-        let enemyOrigin : CGPoint = CGPoint(x: enemyXpos, y: enemyYpos)
-        
-        enemy = SKSpriteNode(imageNamed: possibleEnemyImage[Int(arc4random_uniform(4))])
-        enemy?.scale(to: CGSize(width: player.size.height, height: player.size.height))
-        enemy?.position = enemyOrigin
-        enemy?.run(moveEnemyDown)
-        enemy?.run(rotateEnemy)
-        let enemyRadius : CGFloat = (enemy?.size.width)!/2
+    @objc func CreateNewAsteroid() {
+        var asteroid : SKSpriteNode
 
-        enemy?.physicsBody? = SKPhysicsBody(circleOfRadius: enemyRadius)
+        asteroid = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
+        asteroid.scale(to: CGSize(width: player.size.height, height: player.size.height))
         
-        enemy?.physicsBody?.categoryBitMask = enemyCategory
-        enemy?.physicsBody?.contactTestBitMask = bulletCategory
-        enemy?.physicsBody?.collisionBitMask = 0
-        enemy?.zPosition = 1
+        let randomAsteroidPosition = GKRandomDistribution(lowestValue: Int(-1 * self.size.width/2), highestValue: Int(self.size.width/2))
+        let position = CGFloat(randomAsteroidPosition.nextInt())
         
-        enemiesArray.append(enemy!)
-        self.addChild(enemy!)
+        asteroid.position = CGPoint(x: position, y: (self.frame.height + asteroid.size.height)/2)
+        
+        let moveAsteroidToTop : SKAction = SKAction.move(to: CGPoint(x: position, y: -1 * self.size.height/2 - asteroid.size.height), duration: asteroidSpeed)
+        var actionArray = [SKAction]()
+        
+        actionArray.append(moveAsteroidToTop)
+        actionArray.append(SKAction.removeFromParent())
+        
+        asteroid.run(SKAction.repeatForever(SKAction.rotate(byAngle: 25, duration: 5)))
+        asteroid.run(SKAction.sequence(actionArray))
+
+        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.size.height/2)
+        asteroid.physicsBody?.affectedByGravity = false
+        asteroid.physicsBody?.isDynamic = false
+        asteroid.physicsBody?.allowsRotation = false
+        
+        asteroid.physicsBody?.categoryBitMask = asteroidCategory
+        asteroid.physicsBody?.contactTestBitMask = bulletCategory
+        asteroid.physicsBody?.collisionBitMask = 0
+        
+        self.addChild(asteroid)
     }
     
     @objc func CreateNewBullet() {
+        
         let bulletOrigin : CGPoint = CGPoint(x: player.position.x, y: player.position.y+player.size.height/2)
-        let moveBulletUp = SKAction.repeatForever(SKAction.moveBy(x: 0, y: 3, duration: 0.01))
+        let moveBulletUp : SKAction = SKAction.move(to: CGPoint(x: bulletOrigin.x, y: self.size.height/2), duration: bulletSpeed)
         
-        var bullet : SKSpriteNode?
+        var actionArray = [SKAction]()
+        
+        actionArray.append(moveBulletUp)
+        actionArray.append(SKAction.removeFromParent())
+        
+        var bullet : SKSpriteNode
         bullet = SKSpriteNode(imageNamed: "bulletImage")
-        bullet?.position = bulletOrigin
-        bullet?.run(moveBulletUp)
+        bullet.position = bulletOrigin
+        bullet.run(SKAction.sequence(actionArray))
         
-        bullet?.physicsBody? = SKPhysicsBody(rectangleOf: (bullet?.size)!)
-        bullet?.physicsBody?.categoryBitMask =  bulletCategory
-        bullet?.physicsBody?.contactTestBitMask = enemyCategory
-        bullet?.physicsBody?.collisionBitMask = 0
-        bullet?.physicsBody?.isDynamic = true
-        bullet?.physicsBody?.usesPreciseCollisionDetection = true
-        bullet?.zPosition = 1
+        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.size)
+        bullet.physicsBody?.categoryBitMask = bulletCategory
+        bullet.physicsBody?.contactTestBitMask = asteroidCategory
+        bullet.physicsBody?.collisionBitMask = 0
+        bullet.physicsBody?.usesPreciseCollisionDetection = true
+        bullet.physicsBody?.isDynamic = true
+        bullet.zPosition = 1
         
-        bulletsArray.append(bullet!)
-        self.addChild(bullet!)
+        bulletsArray.append(bullet)
+        self.addChild(bullet)
     }
     
     func CreateScoreBoard() {
@@ -140,57 +155,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return randomNumber
     }
     
-    func CheckBoundry(spriteArray : inout [SKSpriteNode], location : CGFloat) {
-        var flag : Int = 0
-        for item in spriteArray {
-            if Int(location) > 0 {
-                if item.position.y >= location {
-                    item.run(SKAction.removeFromParent())
-                    spriteArray.remove(at: flag)
-                }
-                flag += 1
-            }
-            else {
-                if item.position.y <= location {
-                    let randomXpos = randomNum(high:  self.frame.size.width/2, low: -1 * self.frame.size.width/2)
-                    let randomYpos = randomNum(high:  2.5*self.frame.size.height, low: self.frame.size.height/2)
-                    let randomPoint : CGPoint = CGPoint(x: randomXpos, y: randomYpos)
-                    item.position = randomPoint
-                    score -= 5
-                }
-                flag += 1
-            }
-        }
+    func setUpPhysics() {
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        self.physicsWorld.contactDelegate = self
     }
     
-    func SetBackground(image : UIImage){
+    func  bulletDidCollideWithAsteroid(bulletNode:SKSpriteNode, asteroidNode:SKSpriteNode) {
+        let explosion = SKEmitterNode(fileNamed: "Explosion")!
+        explosion.position = asteroidNode.position
+        self.addChild(explosion)
         
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = image
-        backgroundImage.contentMode = UIViewContentMode.scaleAspectFill
-        view?.sendSubview(toBack: backgroundImage)
-        view?.addSubview(backgroundImage)
-    }
-    
-    func CreateAllEnemies(amountOfEnemies : UInt8) {
-        for _ in 0...amountOfEnemies {
-            CreateNewEnemy()
+        bulletNode.removeFromParent()
+        asteroidNode.removeFromParent()
+        
+        self.run(SKAction.wait(forDuration: 2)) {
+            explosion.removeFromParent()
         }
+        
+        score += 5
+        
+        
     }
     
     override func didMove(to view: SKView) {
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        self.physicsWorld.contactDelegate = self
+        setUpPhysics()
         CreatePlayer()
         CreateScoreBoard()
-        CreateAllEnemies(amountOfEnemies: numberOfEnemies)
-        bulletTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(CreateNewBullet) , userInfo: nil, repeats: true)
-        
+        bulletTimer = Timer.scheduledTimer(timeInterval: bulletProductionRate, target: self, selector: #selector(CreateNewBullet) , userInfo: nil, repeats: true)
+        asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if let touch = touches.first {
+        if let touch = touches.first{
             let touchLocation = touch.previousLocation(in: self)
             
             
@@ -214,14 +211,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
-        CheckBoundry(spriteArray : &bulletsArray, location: self.frame.height/2)
-        CheckBoundry(spriteArray: &enemiesArray, location: -1*(self.frame.height/2))
         CheckPlayerBoundry()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("Hello")
+        var firstBody:SKPhysicsBody
+        var secondBody:SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA 
+            secondBody = contact.bodyB
+        }else{
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if (firstBody.categoryBitMask & bulletCategory) != 0 && (secondBody.categoryBitMask & asteroidCategory) != 0 {
+            bulletDidCollideWithAsteroid(bulletNode: firstBody.node as! SKSpriteNode, asteroidNode: secondBody.node as! SKSpriteNode)
+            
+        }
     }
+
+
 }
-
-
