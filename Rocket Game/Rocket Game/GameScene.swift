@@ -11,34 +11,39 @@ import GameplayKit
 import CoreMotion
 
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var motionManager: CMMotionManager!
     
     var player : SKSpriteNode!
     var playerPos : CGPoint!
+    var LivesArray = [SKSpriteNode]()
     
     var bulletsArray = [SKSpriteNode]()
     var bulletTimer : Timer!
     var asteroidTimer : Timer!
     
     let numberOfAsteroid : UInt8 = 30 // Default = 30
-    let  possibleAsteroidImage : [String] = ["spaceMeteors_001", "spaceMeteors_002", "spaceMeteors_003", "spaceMeteors_004"]
+    let possibleAsteroidImage : [String] = ["spaceMeteors_001", "spaceMeteors_002", "spaceMeteors_003", "spaceMeteors_004"]
     
-    let bulletSpeed : TimeInterval = 6
-    let bulletProductionRate : TimeInterval = 0.5
+    let bulletSpeed : TimeInterval = 1
     
     let asteroidSpeed : TimeInterval = 6
     let asteroidProductionRate : TimeInterval = 0.75
     
     var scoreLabel : SKLabelNode!
-    var score : Int = 0 {
-        didSet {
-            scoreLabel.text = "Score : \(score)"
-        }
-    }
+    var score : Int = 0
+    
+    var GameOverLabel : SKLabelNode!
+    
     let asteroidCategory:UInt32 = 0x1 << 1
     let bulletCategory:UInt32 = 0x1 << 0
+    
+    let motionManger = CMMotionManager()
+    var xAcceleration:CGFloat = 0
+    
+    var gameState : Bool = true
     
     func MovePlayer(direction: Bool) {
         
@@ -80,9 +85,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         actionArray.append(moveAsteroidToTop)
         actionArray.append(SKAction.removeFromParent())
+        actionArray.append(SKAction.run {self.RemoveOneLife()})
         
         asteroid.run(SKAction.repeatForever(SKAction.rotate(byAngle: 25, duration: 5)))
         asteroid.run(SKAction.sequence(actionArray))
+        
 
         asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.size.height/2)
         asteroid.physicsBody?.affectedByGravity = false
@@ -123,13 +130,58 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(bullet)
     }
     
+    func CreateLives() {
+        
+        for life in 1...3 {
+            let newLife = SKSpriteNode(imageNamed: "spaceShipImage")
+            
+            newLife.run(SKAction.scale(by: 2/3, duration: 0.1))
+            newLife.position = CGPoint(x: self.frame.size.width/2 - (CGFloat(life) * newLife.size.width), y: scoreLabel.position.y)
+            
+            LivesArray.append(newLife)
+            self.addChild(newLife)
+        }
+    }
+    
+    func RemoveOneLife() {
+        LivesArray.last?.removeFromParent()
+        LivesArray.removeLast()
+        
+        if LivesArray.count == 0 {
+            print("Game Over")
+            gameState = false
+            GameOver()
+        }
+    }
+    
+    func GameOver(){
+        if GameOverLabel == nil {
+            GameOverLabel = SKLabelNode(text: "Game Over")
+            GameOverLabel.fontName = "AvenirNext-DemiBold"
+            GameOverLabel.fontSize = 100
+            GameOverLabel.color = .white
+            GameOverLabel.zPosition = 2
+            GameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+        }
+        else {
+            GameOverLabel.isHidden = false
+        }
+
+        asteroidTimer.invalidate()
+        self.removeAllChildren()
+        self.addChild(GameOverLabel)
+    }
+    
+    
     func CreateScoreBoard() {
         scoreLabel =  SKLabelNode(text : "Score : 0")
-        scoreLabel.position = CGPoint(x: 0 , y : 560)
         scoreLabel.fontName = "AvenirNext-DemiBold"
         scoreLabel.fontSize = 50
         scoreLabel.color = .white
         scoreLabel.zPosition = 2
+        
+        scoreLabel.position =  CGPoint(x: frame.minX, y: frame.maxY-50)
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
         self.addChild(scoreLabel)
     }
@@ -173,32 +225,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         score += 5
+        scoreLabel.text = "Score : 0"
         
         
+    }
+    
+    func setTimers() {
+        asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
+    }
+    
+    func setupPlayerControl() {
+        motionManger.accelerometerUpdateInterval = 0.2
+        motionManger.startAccelerometerUpdates(to: OperationQueue.current!) { (data:CMAccelerometerData?, error:Error?) in
+            if let accelerometerData = data {
+                let acceleration = accelerometerData.acceleration
+                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
+            }
+        }
     }
     
     override func didMove(to view: SKView) {
         setUpPhysics()
         CreatePlayer()
+        setupPlayerControl()
         CreateScoreBoard()
-        bulletTimer = Timer.scheduledTimer(timeInterval: bulletProductionRate, target: self, selector: #selector(CreateNewBullet) , userInfo: nil, repeats: true)
-        asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
+        setTimers()
+        CreateLives()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if let touch = touches.first{
-            let touchLocation = touch.previousLocation(in: self)
-            
-            
-            if touchLocation.x > 0 {
-                MovePlayer(direction: true)
-            }
-                
-            else if touchLocation.x < 0 {
-                MovePlayer(direction: false)
-            }
-        }
+    override func didSimulatePhysics() {
+        player.position.x += xAcceleration * 25
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -207,6 +263,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player?.removeAllActions()
+        CreateNewBullet()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameState == false{
+            print("touchesBegan")
+            setUpPhysics()
+            CreatePlayer()
+            setupPlayerControl()
+            CreateScoreBoard()
+            asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
+            CreateLives()
+            GameOverLabel.isHidden = true
+            gameState = true
+        }
     }
     
     
