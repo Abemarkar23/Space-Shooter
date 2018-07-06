@@ -18,7 +18,7 @@
 		A4515D1020CF4E31009B1AB1 /* Rocket_GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515D0F20CF4E31009B1AB1 /* Rocket_GameTests.swift */; };
 		A4515D1B20CF4E31009B1AB1 /* Rocket_GameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515D1A20CF4E31009B1AB1 /* Rocket_GameUITests.swift */; };
 		A4515D2D20CF540F009B1AB1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515D2C20CF540E009B1AB1 /* GameScene.sks */; };
-		A466C21C20E860A500E6D8A7 /* GameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A466C21B20E860A500E6D8A7 /* GameOverViewController.swift */; };
+		A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 		A4515D1A20CF4E31009B1AB1 /* Rocket_GameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket_GameUITests.swift; sourceTree = "<group>"; };
 		A4515D1C20CF4E31009B1AB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4515D2C20CF540E009B1AB1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		A466C21B20E860A500E6D8A7 /* GameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
+		A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +109,8 @@
 			children = (
 				A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */,
 				A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */,
+				A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */,
 				A4515CFC20CF4E2F009B1AB1 /* GameViewController.swift */,
-				A466C21B20E860A500E6D8A7 /* GameOverViewController.swift */,
 				A4515D2C20CF540E009B1AB1 /* GameScene.sks */,
 				A4515CF820CF4E2F009B1AB1 /* Actions.sks */,
 				A408FFCF20D72B8A0039C0E8 /* Explosion.sks */,
@@ -274,7 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A466C21C20E860A500E6D8A7 /* GameOverViewController.swift in Sources */,
+				A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */,
 				A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */,
 				A4515CFD20CF4E2F009B1AB1 /* GameViewController.swift in Sources */,
 				A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */,
