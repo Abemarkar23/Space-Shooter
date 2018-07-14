@@ -11,14 +11,18 @@ import GameplayKit
 import CoreMotion
 import UIKit
 
+var latestScore : Int!
+var highScore : Int!
+var average : UInt32 = 0
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var motionManager: CMMotionManager!
     
     var player : SKSpriteNode!
     var LivesArray = [SKSpriteNode]()
     
     let bulletSpeed : TimeInterval = 1
+    let bulletProductionRate : TimeInterval = 0.50
+    var bulletTimer : Timer!
     
     var asteroidSpeed : TimeInterval = 6
     var asteroidProductionRate : TimeInterval = 0.75
@@ -31,26 +35,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var satelliteTimer : Timer!
     let sateliteScoreThreshold : Int = 0
     
-    
     var scoreLabel : SKLabelNode!
     var score : Int = 0
     
-    var GameOverLabel : SKLabelNode!
+    var GamePauseLabel : SKLabelNode = SKLabelNode(text: "Game Paused, tap to unpause")
+    var GameOverLabel : SKLabelNode = SKLabelNode(text: "Game Over")
+    var GameOverLabelAdded : Bool = false
     
     let bulletCategory:UInt32 =     0x1 << 0
     let asteroidCategory:UInt32 =   0x1 << 1
     let satelliteCategory:UInt32 =  0x1 << 2
-    
-    let motionManger = CMMotionManager()
-    var xAcceleration:CGFloat = 0
+    let playerCategory:UInt32 =     0x1 << 3
     
     var gameState : Bool = true
     
+    var numberOfGames : UInt32 = 0
+    var cumulativeScore : Int = 0
+    
     func setToDifficulty() {
         if gameDifficulty == Difficulty.hard {
-            asteroidSpeed = 5
+            asteroidSpeed = 4
             asteroidProductionRate = 0.50
-            satelliteSpeed = 3.5
+            satelliteSpeed = 3
             satelliteProductionRate = 3
         }
         if gameDifficulty == Difficulty.medium {
@@ -67,15 +73,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func UpdateAverage () {
+        numberOfGames += 1
+        cumulativeScore += score
+        
+    }
+    
     func CreatePlayer(){
         let playerPositionY : CGFloat = -0.4122938531 * self.frame.size.height
         player = SKSpriteNode(imageNamed: "spaceShipImage")
         player.position = CGPoint(x: 0 , y:  playerPositionY)
         
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        
+        player.physicsBody?.categoryBitMask = playerCategory
+        player.physicsBody?.contactTestBitMask = satelliteCategory + asteroidCategory
+        player.physicsBody?.collisionBitMask = 0
+        
         self.addChild(player)
     }
     
     @objc func CreateNewSatellite() {
+        
         let satellite : SKSpriteNode = SKSpriteNode(imageNamed: possibleSatelliteImage[Int(arc4random_uniform(2))])
         
         let randomSatellitePosition = GKRandomDistribution(lowestValue: Int(-1 * self.size.width/2), highestValue: Int(self.size.width/2))
@@ -115,16 +134,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         asteroid.position = CGPoint(x: position, y: (self.frame.height + asteroid.size.height)/2)
         
-        let moveAsteroidToTop : SKAction = SKAction.move(to: CGPoint(x: position, y: -1 * self.size.height/2 - asteroid.size.height), duration: asteroidSpeed)
+        let moveAsteroidToBottom : SKAction = SKAction.move(to: CGPoint(x: position, y: -1 * self.size.height/2 - asteroid.size.height), duration: asteroidSpeed)
         var actionArray = [SKAction]()
         
-        actionArray.append(moveAsteroidToTop)
+        actionArray.append(moveAsteroidToBottom)
         actionArray.append(SKAction.removeFromParent())
         actionArray.append(SKAction.run {self.RemoveOneLife()})
         
         asteroid.run(SKAction.repeatForever(SKAction.rotate(byAngle: 25, duration: 5)))
         asteroid.run(SKAction.sequence(actionArray))
-        
         
         asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.size.height/2)
         asteroid.physicsBody?.affectedByGravity = false
@@ -160,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody?.usesPreciseCollisionDetection = true
         bullet.physicsBody?.isDynamic = true
         bullet.zPosition = 1
-
+        
         self.addChild(bullet)
     }
     
@@ -178,33 +196,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func RemoveOneLife() {
+        print(LivesArray.count)
         if LivesArray.count != 0 {
             LivesArray.last?.removeFromParent()
             LivesArray.removeLast()
         }
-        if LivesArray.count == 0 {
-            gameState = false
+        if LivesArray.count <= 0 {
             GameOver()
         }
     }
     
+    func setupLabel(Label : inout SKLabelNode, fontSize : CGFloat) {
+        Label.fontName = "AvenirNext-DemiBold"
+        Label.fontSize = fontSize
+        Label.color = .white
+        Label.zPosition = 2
+        Label.lineBreakMode = .byWordWrapping
+        Label.numberOfLines = 2
+        Label.preferredMaxLayoutWidth = self.frame.size.width-30
+        Label.numberOfLines = 2
+        Label.position = CGPoint(x: frame.midX, y: frame.midY)
+    }
+    
     func GameOver(){
+        gameState = false
         self.removeAllChildren()
-        if GameOverLabel == nil {
-            GameOverLabel = SKLabelNode(text: "Game Over")
-            GameOverLabel.fontName = "AvenirNext-DemiBold"
-            GameOverLabel.fontSize = 100
-            GameOverLabel.color = .white
-            GameOverLabel.zPosition = 2
-            GameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        }
-        else {
-            GameOverLabel.isHidden = false
-        }
+        setupLabel(Label: &GameOverLabel, fontSize: 100)
+        GameOverLabel.isHidden = false
         if satelliteTimer != nil{
             satelliteTimer.invalidate()
         }
+        if latestScore != nil && score >= latestScore{
+            highScore = score
+        }
+        latestScore = score
+        score = 0
+        satelliteTimer.invalidate()
         asteroidTimer.invalidate()
+        bulletTimer.invalidate()
         self.addChild(GameOverLabel)
     }
     
@@ -220,21 +249,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
         self.addChild(scoreLabel)
-    }
-    
-    func CheckPlayerBoundry() {
-        let playerYPosition : CGFloat = -0.4122938531 * self.frame.size.height
-        let playerBoundryRight : CGFloat = (self.frame.width/2  - player.size.width/2)
-        let playerBoundryLeft : CGFloat = -1*(playerBoundryRight)
-        
-        
-        if player.position.x >= playerBoundryRight {
-            player?.position = CGPoint(x: playerBoundryRight, y: playerYPosition)
-        }
-        
-        if player.position.x <= playerBoundryLeft {
-            player?.position = CGPoint(x: playerBoundryLeft, y: playerYPosition)
-        }
     }
     
     func randomNum(high: CGFloat, low: CGFloat) -> CGFloat{
@@ -263,44 +277,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score += addScore
         scoreLabel.text = "Score : \(score)"
         if gameState == true && satelliteTimer == nil && score >= sateliteScoreThreshold{
-                print("Started Satellite Timer.")
-                satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
+            satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
         }
         
     }
     
-    
-    func setupPlayerControl() {
-        motionManger.accelerometerUpdateInterval = 0.2
-        motionManger.startAccelerometerUpdates(to: OperationQueue.current!) { (data:CMAccelerometerData?, error:Error?) in
-            if let accelerometerData = data {
-                let acceleration = accelerometerData.acceleration
-                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-            }
-        }
+    func startTimers() {
+        asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
+        bulletTimer = Timer.scheduledTimer(timeInterval: bulletProductionRate, target: self, selector: #selector(CreateNewBullet), userInfo: nil, repeats: true)
     }
     
     func StartNewGame() {
         setUpPhysics()
         CreatePlayer()
-        setupPlayerControl()
         CreateScoreBoard()
         CreateLives()
         setToDifficulty()
-        asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
-        if GameOverLabel != nil {
-            GameOverLabel.isHidden = true
-            gameOverButton.isHidden = true
-        }
+        startTimers()
+        GameOverLabel.isHidden = true
         gameState = true
+        setupLabel(Label: &GamePauseLabel, fontSize: 100)
+        GamePauseLabel.isHidden = true
+        self.addChild(GamePauseLabel)
     }
     
     override func didMove(to view: SKView) {
         StartNewGame()
-    }
-    
-    override func didSimulatePhysics() {
-        player.position.x += xAcceleration * 25
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -309,33 +311,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player?.removeAllActions()
-        CreateNewBullet()
+        GamePauseLabel.isHidden = false
+        
+        bulletTimer.invalidate()
+        satelliteTimer.invalidate()
+        asteroidTimer.invalidate()
+        
+        self.isPaused = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.isPaused = false
         if gameState == false{
-           StartNewGame()
+            StartNewGame()
+        }
+        GamePauseLabel.isHidden = true
+        if let touch = touches.first {
+            player.position = (touches.first?.location(in: self))!
+        }
+        if bulletTimer.isValid == false && satelliteTimer.isValid == false && asteroidTimer.isValid == false {
+            startTimers()
+            satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
         }
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        CheckPlayerBoundry()
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        GamePauseLabel.isHidden = true
+        self.isPaused = false
+        if self.isPaused == false{
+            for touch in touches {
+                player.position = touch.location(in: self)
+            }
+        }
+        if bulletTimer.isValid == false && satelliteTimer.isValid == false && asteroidTimer.isValid == false {
+            startTimers()
+            satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody:SKPhysicsBody
         var secondBody:SKPhysicsBody
         
-//        if contact.bodyA.categoryBitMask == satelliteCategory {
-//            firstBody = contact.bodyA
-//            secondBody = contact.bodyB
-//        }
-//
-//        else if contact.bodyB.categoryBitMask == satelliteCategory {
-//            firstBody = contact.bodyB
-//            secondBody = contact.bodyA
-//        }
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA 
@@ -344,6 +361,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
+        }
+        
+        if contact.bodyA.categoryBitMask == playerCategory  {
+            GameOver()
         }
         
         if (firstBody.categoryBitMask & bulletCategory) != 0 && (secondBody.categoryBitMask & asteroidCategory) != 0 {
@@ -355,6 +376,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
-
-
+    
+    
 }

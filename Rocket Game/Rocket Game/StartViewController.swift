@@ -21,17 +21,28 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if highScore != nil {
+            HighScoreLabel.text = "High Score: \(highScore!)"
+            print("\(highScore!)")
+        }
+        
+        if latestScore != nil {
+            PreviousScoreLabel.text = "Previous Score: \(latestScore!)"
+            PreviousScoreLabel.isHidden = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBOutlet weak var HighScoreLabel: UILabel!
     
+    @IBOutlet weak var PreviousScoreLabel: UILabel!
     
     @IBOutlet var DifficultyButtons: [UIButton]!
     
+    @IBOutlet weak var AverageLabel: UILabel!
     
     @IBAction func SelectDifficulty(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3, animations: {
@@ -50,13 +61,8 @@ class StartViewController: UIViewController {
         }
         
     }
-    
-    
-    
-    
-    
         
-    }
+}
 
     
 
