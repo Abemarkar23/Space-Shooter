@@ -20,33 +20,22 @@ let asteroidCategory:UInt32 =   0x1 << 1
 let satelliteCategory:UInt32 =  0x1 << 2
 let playerCategory:UInt32 =     0x1 << 3
 
+var LivesArray = [SKSpriteNode]();
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player : Player!
-    var LivesArray = [SKSpriteNode]()
     
     let bulletSpeed : TimeInterval = 1
     let bulletProductionRate : TimeInterval = 0.50
     var bulletTimer : Timer!
-    
-    var asteroidSpeed : TimeInterval = 6
-    var asteroidProductionRate : TimeInterval = 0.75
-    let possibleAsteroidImage : [String] = ["spaceMeteors_001", "spaceMeteors_002", "spaceMeteors_003", "spaceMeteors_004"]
-    var asteroidTimer : Timer!
-    var asteroidScore : Int = 5
-    
-    var satelliteSpeed : TimeInterval = 4
-    var satelliteProductionRate : TimeInterval = 4
-    let possibleSatelliteImage : [String] = ["yellowSatellite", "blueSatellite"]
-    var satelliteTimer : Timer!
-    let sateliteScoreThreshold : Int = 0
-    var satelliteScore : Int = 10
     
     var scoreLabel : SKLabelNode!
     var score : Int = 0
     
     var GamePauseLabel : SKLabelNode = SKLabelNode(text: "Game Paused, tap to unpause")
     var GameOverLabel : SKLabelNode = SKLabelNode(text: "Game Over")
+    var PressQuitLabel : SKLabelNode  = SKLabelNode(text: "Press quit to go back to main menu")
     var GameOverLabelAdded : Bool = false
     
     var gameState : Bool = true
@@ -95,65 +84,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func CreateNewSatellite() {
-        
         let satellite : SKSpriteNode = SKSpriteNode(imageNamed: possibleSatelliteImage[Int(arc4random_uniform(2))])
-        
-        let randomSatellitePosition = GKRandomDistribution(lowestValue: Int(-1 * self.size.width/2), highestValue: Int(self.size.width/2))
-        let position = CGFloat(randomSatellitePosition.nextInt())
-        
-        satellite.position = CGPoint(x: position, y: (self.frame.height + satellite.size.height)/2 + 200)
-        
-        let moveSatelliteToTop : SKAction = SKAction.move(to: CGPoint(x: position, y: -1 * self.size.height/2 - satellite.size.height), duration: satelliteSpeed)
-        var actionArray = [SKAction]()
-        
-        actionArray.append(moveSatelliteToTop)
-        actionArray.append(SKAction.removeFromParent())
-        
-        satellite.run(SKAction.rotate(byAngle: CGFloat(arc4random_uniform(2)), duration: satelliteSpeed))
-        satellite.run(SKAction.sequence(actionArray))
-        
-        satellite.physicsBody = SKPhysicsBody(rectangleOf: satellite.size)
-        satellite.physicsBody?.affectedByGravity = false
-        satellite.physicsBody?.isDynamic = false
-        satellite.physicsBody?.allowsRotation = false
-        
-        satellite.physicsBody?.categoryBitMask = satelliteCategory
-        satellite.physicsBody?.contactTestBitMask = bulletCategory
-        satellite.physicsBody?.collisionBitMask = 0
-        
+        satellite.SatelliteEnemySettings(screenHeight: self.frame.height, screenWidth: self.frame.width)
         self.addChild(satellite)
         
     }
     
     @objc func CreateNewAsteroid() {
-        var asteroid : SKSpriteNode
-        asteroid = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
-        asteroid.scale(to: CGSize(width: player.size.height, height: player.size.height))
-        
-        let randomAsteroidPosition = GKRandomDistribution(lowestValue: Int(-1 * self.size.width/2), highestValue: Int(self.size.width/2))
-        let position = CGFloat(randomAsteroidPosition.nextInt())
-        
-        asteroid.position = CGPoint(x: position, y: (self.frame.height + asteroid.size.height)/2)
-        
-        let moveAsteroidToBottom : SKAction = SKAction.move(to: CGPoint(x: position, y: -1 * self.size.height/2 - asteroid.size.height), duration: asteroidSpeed)
-        var actionArray = [SKAction]()
-        
-        actionArray.append(moveAsteroidToBottom)
-        actionArray.append(SKAction.removeFromParent())
-        actionArray.append(SKAction.run {self.RemoveOneLife()})
-        
-        asteroid.run(SKAction.repeatForever(SKAction.rotate(byAngle: 25, duration: 5)))
-        asteroid.run(SKAction.sequence(actionArray))
-        
-        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.size.height/2)
-        asteroid.physicsBody?.affectedByGravity = false
-        asteroid.physicsBody?.isDynamic = false
-        asteroid.physicsBody?.allowsRotation = false
-        
-        asteroid.physicsBody?.categoryBitMask = asteroidCategory
-        asteroid.physicsBody?.contactTestBitMask = bulletCategory
-        asteroid.physicsBody?.collisionBitMask = 0
-        
+        let asteroid : SKSpriteNode = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
+        asteroid.AsteroidEnemySettings(screenHeight: self.frame.height, screenWidth: self.frame.width, player: player)
         self.addChild(asteroid)
     }
     
@@ -192,38 +131,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             newLife.position = CGPoint(x: self.frame.size.width/2 - (CGFloat(life) * newLife.size.width), y: scoreLabel.position.y)
             
             LivesArray.append(newLife)
+            
+            
             self.addChild(newLife)
         }
     }
     
     func RemoveOneLife() {
-        print(LivesArray.count)
-        if LivesArray.count != 0 {
+        if LivesArray.count >= 1 {
+            print(LivesArray.count)
             LivesArray.last?.removeFromParent()
             LivesArray.removeLast()
         }
-        if LivesArray.count <= 0 {
-            GameOver()
-        }
+        print(LivesArray.count)
     }
     
-    func setupLabel(Label : inout SKLabelNode, fontSize : CGFloat) {
-        Label.fontName = "AvenirNext-DemiBold"
-        Label.fontSize = fontSize
-        Label.color = .white
-        Label.zPosition = 2
-        Label.lineBreakMode = .byWordWrapping
-        Label.numberOfLines = 2
-        Label.preferredMaxLayoutWidth = self.frame.size.width-30
-        Label.numberOfLines = 2
-        Label.position = CGPoint(x: frame.midX, y: frame.midY)
-    }
-    
-    func GameOver(){
+    func GameOver(selfClass : GameScene){
+        print("game over")
         gameState = false
-        
-        self.removeAllChildren()
-        GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 100, labelPosition: CGPoint(x: frame.minX+10, y: frame.midY), layoutWidth: self.frame.size.width-30)
+//        self.isPaused = true
+        print(selfClass.children)
+        selfClass.removeAllChildren()
+        print(selfClass.children)
+        GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: frame.minX, y: frame.midY), layoutWidth: selfClass.frame.size.width)
+        PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: frame.minX, y: frame.minY+20), layoutWidth: selfClass.frame.size.width-30)
+        selfClass.addChild(PressQuitLabel)
+        GameOverLabel.text = "Game Over, You ended up with \(score) points"
         GameOverLabel.isHidden = false
         
         if satelliteTimer != nil{
@@ -240,14 +173,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         UpdateAverage()
         
-        if satelliteTimer != nil{
-            satelliteTimer.invalidate()
-        }
-        asteroidTimer.invalidate()
-        bulletTimer.invalidate()
+//        if satelliteTimer != nil{
+//            satelliteTimer.invalidate()
+//        }
+//        asteroidTimer.invalidate()
+//        bulletTimer.invalidate()
         
-        self.addChild(GameOverLabel)
-        self.isPaused = true
+        selfClass.addChild(GameOverLabel)
+
     }
     
     
@@ -289,7 +222,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func startTimers() {
-        print(asteroidProductionRate)
         asteroidTimer = Timer.scheduledTimer(timeInterval: asteroidProductionRate, target: self, selector: #selector(CreateNewAsteroid) , userInfo: nil, repeats: true)
         bulletTimer = Timer.scheduledTimer(timeInterval: bulletProductionRate, target: self, selector: #selector(CreateNewBullet), userInfo: nil, repeats: true)
     }
@@ -377,9 +309,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
-        
         if contact.bodyA.categoryBitMask == playerCategory  {
-            GameOver()
+            GameOver(selfClass: self)
         }
         
         if (firstBody.categoryBitMask & bulletCategory) != 0 && (secondBody.categoryBitMask & asteroidCategory) != 0 {
@@ -390,6 +321,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bulletDidCollide(bulletNode: firstBody.node as! SKSpriteNode, EnemyNode: secondBody.node as! SKSpriteNode, addScore: satelliteScore)
         }
         
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if LivesArray.count == 0 {
+            GameOver(selfClass: self)
+        }
     }
     
     

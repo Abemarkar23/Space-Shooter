@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		A408FFC820D3390D0039C0E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A408FFC620D3390D0039C0E8 /* Assets.xcassets */; };
 		A408FFD020D72B8A0039C0E8 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A408FFCF20D72B8A0039C0E8 /* Explosion.sks */; };
-		A41029BF20FFE422007BF95C /* player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029BE20FFE421007BF95C /* player.swift */; };
+		A41029BF20FFE422007BF95C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029BE20FFE421007BF95C /* Player.swift */; };
 		A41029C121004A9D007BF95C /* Formating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029C021004A9D007BF95C /* Formating.swift */; };
+		A41029C32100F93B007BF95C /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029C22100F93B007BF95C /* Enemy.swift */; };
 		A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */; };
 		A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515CF820CF4E2F009B1AB1 /* Actions.sks */; };
 		A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */; };
@@ -43,8 +44,9 @@
 /* Begin PBXFileReference section */
 		A408FFC620D3390D0039C0E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A408FFCF20D72B8A0039C0E8 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
-		A41029BE20FFE421007BF95C /* player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = player.swift; sourceTree = "<group>"; };
+		A41029BE20FFE421007BF95C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A41029C021004A9D007BF95C /* Formating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formating.swift; sourceTree = "<group>"; };
+		A41029C22100F93B007BF95C /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		A4515CF120CF4E2F009B1AB1 /* Rocket Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rocket Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4515CF820CF4E2F009B1AB1 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -113,7 +115,8 @@
 			children = (
 				A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */,
 				A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */,
-				A41029BE20FFE421007BF95C /* player.swift */,
+				A41029BE20FFE421007BF95C /* Player.swift */,
+				A41029C22100F93B007BF95C /* Enemy.swift */,
 				A41029C021004A9D007BF95C /* Formating.swift */,
 				A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */,
 				A4515CFC20CF4E2F009B1AB1 /* GameViewController.swift */,
@@ -280,10 +283,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A41029C32100F93B007BF95C /* Enemy.swift in Sources */,
 				A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */,
 				A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */,
 				A4515CFD20CF4E2F009B1AB1 /* GameViewController.swift in Sources */,
-				A41029BF20FFE422007BF95C /* player.swift in Sources */,
+				A41029BF20FFE422007BF95C /* Player.swift in Sources */,
 				A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */,
 				A41029C121004A9D007BF95C /* Formating.swift in Sources */,
 			);
