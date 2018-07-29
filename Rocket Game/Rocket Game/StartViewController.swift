@@ -22,10 +22,6 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
         setLabels()
         StartButton.applyAdditionalButtonDesign()
-        Hard.applyAdditionalButtonDesign()
-        Medium.applyAdditionalButtonDesign()
-        Easy.applyAdditionalButtonDesign()
-        ViewScoreButton.applyAdditionalButtonDesign()
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,42 +32,11 @@ class StartViewController: UIViewController {
     
     @IBOutlet weak var PreviousScoreLabel: UILabel!
     
-    @IBOutlet var DifficultyButtons: [UIButton]!
-    
-    @IBOutlet weak var AverageLabel: UILabel!
-    
     @IBOutlet weak var StartButton: UIButton!
     
-    @IBOutlet weak var Hard: UIButton!
-    
-    @IBOutlet weak var Medium: UIButton!
-    
-    @IBOutlet weak var Easy: UIButton!
-    
-    @IBOutlet weak var ViewScoreButton: UIButton!
-    
-    
-    
     @IBAction func SelectDifficulty(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.DifficultyButtons.forEach { (button) in
-                button.isHidden = !button.isHidden
-                }})
-        ViewScoreButton.isHidden = !ViewScoreButton.isHidden
+        gameDifficulty = Difficulty.easy
         }
-    
-    @IBAction func DifficultyChoosen(_ sender: UIButton) {
-        if sender.tag == 2 {
-            gameDifficulty = Difficulty.medium
-        }
-        if sender.tag == 3 {
-            gameDifficulty = Difficulty.easy
-        }
-        if sender.tag == 1 {
-            gameDifficulty = Difficulty.hard
-        }
-    
-    }
     
     func setLabels() {
         if highScore != nil {
@@ -83,8 +48,6 @@ class StartViewController: UIViewController {
             PreviousScoreLabel.text = "Previous Score: \(latestScore!)"
             PreviousScoreLabel.isHidden = false
         }
-        
-        AverageLabel.text = "Average: \(average)"
     }
 }
 

@@ -28,6 +28,7 @@ var asteroidScore : Int = 5
 extension SKSpriteNode {
     func SatelliteEnemySettings(screenHeight : CGFloat, screenWidth : CGFloat) {
             self.position = setEnemyOrigin(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+            self.name = "Enemy"
         
             let satelliteDestination : CGPoint = setEnemyDestination(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
             let moveSatelliteToTop : SKAction = SKAction.move(to: satelliteDestination, duration: satelliteSpeed)
@@ -53,6 +54,7 @@ extension SKSpriteNode {
     func AsteroidEnemySettings(screenHeight : CGFloat, screenWidth : CGFloat, player : SKSpriteNode){
         self.scale(to: CGSize(width: player.size.height, height: player.size.height))
         self.position = setEnemyOrigin(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+        self.name = "Enemy"
         
         let asteroidDestination : CGPoint = setEnemyDestination(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
         let moveAsteroidToBottom : SKAction = SKAction.move(to: asteroidDestination, duration: asteroidSpeed)

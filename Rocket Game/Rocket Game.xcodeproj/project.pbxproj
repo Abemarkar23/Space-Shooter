@@ -12,6 +12,8 @@
 		A41029BF20FFE422007BF95C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029BE20FFE421007BF95C /* Player.swift */; };
 		A41029C121004A9D007BF95C /* Formating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029C021004A9D007BF95C /* Formating.swift */; };
 		A41029C32100F93B007BF95C /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029C22100F93B007BF95C /* Enemy.swift */; };
+		A4160EC9210D4E7D00411B0B /* kenvector_future.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4160EC8210D4E7D00411B0B /* kenvector_future.ttf */; };
+		A4160ECB210D6B9B00411B0B /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */; };
 		A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */; };
 		A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515CF820CF4E2F009B1AB1 /* Actions.sks */; };
 		A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */; };
@@ -47,6 +49,8 @@
 		A41029BE20FFE421007BF95C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A41029C021004A9D007BF95C /* Formating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formating.swift; sourceTree = "<group>"; };
 		A41029C22100F93B007BF95C /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		A4160EC8210D4E7D00411B0B /* kenvector_future.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future.ttf; sourceTree = "<group>"; };
+		A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
 		A4515CF120CF4E2F009B1AB1 /* Rocket Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rocket Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4515CF820CF4E2F009B1AB1 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -90,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4160EC7210D4E1F00411B0B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */,
+				A4160EC8210D4E7D00411B0B /* kenvector_future.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		A4515CE820CF4E2F009B1AB1 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +126,7 @@
 		A4515CF320CF4E2F009B1AB1 /* Rocket Game */ = {
 			isa = PBXGroup;
 			children = (
+				A4160EC7210D4E1F00411B0B /* fonts */,
 				A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */,
 				A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */,
 				A41029BE20FFE421007BF95C /* Player.swift */,
@@ -255,10 +269,12 @@
 			files = (
 				A4515D0020CF4E2F009B1AB1 /* Main.storyboard in Resources */,
 				A4515D0520CF4E31009B1AB1 /* LaunchScreen.storyboard in Resources */,
+				A4160ECB210D6B9B00411B0B /* kenvector_future_thin.ttf in Resources */,
 				A4515D2D20CF540F009B1AB1 /* GameScene.sks in Resources */,
 				A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */,
 				A408FFC820D3390D0039C0E8 /* Assets.xcassets in Resources */,
 				A408FFD020D72B8A0039C0E8 /* Explosion.sks in Resources */,
+				A4160EC9210D4E7D00411B0B /* kenvector_future.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

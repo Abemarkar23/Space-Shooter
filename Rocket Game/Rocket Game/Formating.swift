@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import SpriteKit
 
+
+let defaultFont : UIFont = UIFont(name: "KenVector-Future", size: UIFont.labelFontSize)!
+let thinFont : UIFont = UIFont(name: "KenVector-Future-Thin", size: UIFont.labelFontSize)!
+
 extension UIButton {
     func applyAdditionalButtonDesign(){
         self.layer.cornerRadius = self.frame.height/2
@@ -21,19 +25,19 @@ extension UIButton {
 }
 
 extension SKLabelNode {
-    func applyAdditionalSKLabelDesign(labelSize : CGFloat, labelPosition : CGPoint, layoutWidth : CGFloat){
-
-        self.fontName = "AvenirNext-DemiBold"
+    func applyAdditionalSKLabelDesign(labelSize : CGFloat, labelPosition : CGPoint, layoutWidth : CGFloat, font : UIFont = thinFont){
+        self.name = "Label"
+        self.fontName = font.fontName
         self.fontSize = labelSize
         self.zPosition = 2
         self.fontColor = .white
         self.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         self.position = labelPosition
-        self.lineBreakMode = .byWordWrapping
+        self.lineBreakMode = .byCharWrapping
         self.numberOfLines = 2
         self.preferredMaxLayoutWidth = layoutWidth
         self.numberOfLines = 2
-        self.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        self.verticalAlignmentMode = SKLabelVerticalAlignmentMode.baseline
     }
 }
 

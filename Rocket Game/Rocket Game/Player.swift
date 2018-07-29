@@ -18,6 +18,7 @@ class Player: SKSpriteNode {
     }
     
     func createPlayer(playerYPosition: Int){
+        self.name = "Player"
         self.position = CGPoint(x: 0 , y:  playerYPosition)
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         
