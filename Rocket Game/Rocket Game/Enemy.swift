@@ -35,8 +35,8 @@ extension SKSpriteNode {
             var actionArray = [SKAction]()
             
             actionArray.append(moveSatelliteToTop)
-            actionArray.append(SKAction.run {GameScene().RemoveOneLife()})
             actionArray.append(SKAction.removeFromParent())
+            actionArray.append(SKAction.run {GameScene().RemoveOneLife()})
             
             self.run(SKAction.rotate(byAngle: CGFloat(arc4random_uniform(2)), duration: satelliteSpeed))
             self.run(SKAction.sequence(actionArray))

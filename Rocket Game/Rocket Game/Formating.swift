@@ -31,13 +31,14 @@ extension SKLabelNode {
         self.fontSize = labelSize
         self.zPosition = 2
         self.fontColor = .white
-        self.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        self.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.position = labelPosition
         self.lineBreakMode = .byCharWrapping
         self.numberOfLines = 2
         self.preferredMaxLayoutWidth = layoutWidth
         self.numberOfLines = 2
         self.verticalAlignmentMode = SKLabelVerticalAlignmentMode.baseline
+        
     }
 }
 

@@ -23,6 +23,7 @@
 		A4515D1020CF4E31009B1AB1 /* Rocket_GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515D0F20CF4E31009B1AB1 /* Rocket_GameTests.swift */; };
 		A4515D1B20CF4E31009B1AB1 /* Rocket_GameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515D1A20CF4E31009B1AB1 /* Rocket_GameUITests.swift */; };
 		A4515D2D20CF540F009B1AB1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515D2C20CF540E009B1AB1 /* GameScene.sks */; };
+		A4B035BB211AA4380000EA49 /* StarBackground.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4B035BA211AA4380000EA49 /* StarBackground.sks */; };
 		A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		A4515D1A20CF4E31009B1AB1 /* Rocket_GameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket_GameUITests.swift; sourceTree = "<group>"; };
 		A4515D1C20CF4E31009B1AB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4515D2C20CF540E009B1AB1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		A4B035BA211AA4380000EA49 /* StarBackground.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarBackground.sks; sourceTree = "<group>"; };
 		A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 				A4515D2C20CF540E009B1AB1 /* GameScene.sks */,
 				A4515CF820CF4E2F009B1AB1 /* Actions.sks */,
 				A408FFCF20D72B8A0039C0E8 /* Explosion.sks */,
+				A4B035BA211AA4380000EA49 /* StarBackground.sks */,
 				A4515CFE20CF4E2F009B1AB1 /* Main.storyboard */,
 				A4515D0320CF4E31009B1AB1 /* LaunchScreen.storyboard */,
 				A4515D0620CF4E31009B1AB1 /* Info.plist */,
@@ -271,6 +274,7 @@
 				A4515D0520CF4E31009B1AB1 /* LaunchScreen.storyboard in Resources */,
 				A4160ECB210D6B9B00411B0B /* kenvector_future_thin.ttf in Resources */,
 				A4515D2D20CF540F009B1AB1 /* GameScene.sks in Resources */,
+				A4B035BB211AA4380000EA49 /* StarBackground.sks in Resources */,
 				A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */,
 				A408FFC820D3390D0039C0E8 /* Assets.xcassets in Resources */,
 				A408FFD020D72B8A0039C0E8 /* Explosion.sks in Resources */,

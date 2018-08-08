@@ -1,4 +1,4 @@
-// test
+//  test
 //  GameScene.swift
 //  Rocket Game
 //
@@ -23,6 +23,8 @@ let playerCategory : UInt32 =     0x1 << 3
 var LivesArray = [SKSpriteNode]();
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
+    let starField : SKEmitterNode = SKEmitterNode(fileNamed: "StarBackground")!
+    
     var gameState : Bool = true
     
     var player : Player!
@@ -34,9 +36,9 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     var scoreLabel : SKLabelNode!
     var score : Int = 0
     
-    var GamePauseLabel : SKLabelNode = SKLabelNode(text: "Game Paused, tap to unpause")
+    var GamePauseLabel : SKLabelNode = SKLabelNode(text: "Paused")
     var GameOverLabel : SKLabelNode = SKLabelNode(text: "Game Over")
-    var PressQuitLabel : SKLabelNode  = SKLabelNode(text: "Press home to go back to main menu")
+    var PressQuitLabel : SKLabelNode  = SKLabelNode(text: "Press home to go to main menu")
     var GameOverLabelAdded : Bool = false
     
     var numberOfGames : UInt32 = 0
@@ -126,14 +128,27 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreateLives() {
         
-        for life in 1...3 {
+        for life in 0...2 {
             let newLife = SKSpriteNode(imageNamed: "spaceShipImage")
-            
+            newLife.position = CGPoint(x: self.frame.maxX - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.height, y: self.frame.maxY-newLife.size.height/2)
+            if UIDevice().userInterfaceIdiom == .phone {
+                switch UIScreen.main.nativeBounds.height {
+                case 1136:
+                    print("iPhone 5 or 5S or 5C")
+                case 1334:
+                    print("iPhone 6/6S/7/8")
+                case 2208:
+                    print("iPhone 6+/6S+/7+/8+")
+                case 2436:
+                    print("iPhone X")
+                    newLife.position = CGPoint(x: self.frame.maxX - newLife.size.width - 10, y: self.frame.maxY - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.width/2)
+                default:
+                    print("unknown")
+                }
+            }
             newLife.run(SKAction.scale(by: 2/3, duration: 0.1))
-            newLife.position = CGPoint(x: self.frame.size.width/2 - (CGFloat(life) * newLife.size.width), y: scoreLabel.position.y)
-            
             LivesArray.append(newLife)
-            
+    
             
             self.addChild(newLife)
         }
@@ -150,8 +165,9 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         self.isPaused = true
         gameState = false
         self.removeAllChildren()
-        GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: self.frame.midX - self.frame.maxX/2, y: frame.midY), layoutWidth: self.frame.size.width)
-        PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: frame.minX, y: frame.minY+20), layoutWidth: self.frame.size.width-30)
+        
+        GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: self.frame.midX, y: frame.midY), layoutWidth: self.frame.size.width)
+        PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.minY+110), layoutWidth: self.frame.size.width/2)
         
         scoreLabel.position = GameOverLabel.position
         scoreLabel.position.y -= 35
@@ -179,7 +195,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreateScoreBoard() {
         scoreLabel = SKLabelNode(text: "Score : 0")
-        scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: frame.minX, y: frame.minY+50), layoutWidth: self.frame.size.width-30)
+        
+        scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: frame.midX, y: (self.frame.maxY-120)), layoutWidth: self.frame.size.width-30)
         self.addChild(scoreLabel)
     }
     
@@ -219,12 +236,10 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func increaseDifficulty () {
         if asteroidProductionRate > 0.50{
-            asteroidSpeed -= 0.5
+            asteroidSpeed -= 0.6
             asteroidProductionRate -= 0.2
             satelliteSpeed -= 0.6
-            satelliteProductionRate -= 0.6
-            satelliteScore += 2
-            asteroidScore += 1
+            satelliteProductionRate -= 0.75
             bulletProductionRate -= 0.05
             
             satelliteTimer.invalidate()
@@ -232,9 +247,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             asteroidTimer.invalidate()
             
             startTimers()
-        }
-        else {
-            print("limit reached")
         }
     }
     
@@ -244,6 +256,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
     }
     
+    
+    
     func StartNewGame() {
         setUpPhysics()
         CreatePlayer()
@@ -252,13 +266,21 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         setToDifficulty()
         startTimers()
         GameOverLabel.isHidden = true
-        GamePauseLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: frame.minX+10, y: frame.midY), layoutWidth: self.frame.size.width-30)
+        GamePauseLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.midY), layoutWidth: self.frame.size.width/2)
         GamePauseLabel.isHidden = true
+        
+        starField.position.y += self.frame.height/2 + 30
+        starField.zPosition = -4
+        starField.advanceSimulationTime(10)
+        
+        self.addChild(starField)
         self.addChild(GamePauseLabel)
     }
     
     override func didMove(to view: SKView) {
+        
         StartNewGame()
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -333,7 +355,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             if (firstBody.categoryBitMask & bulletCategory) != 0 && (secondBody.categoryBitMask & asteroidCategory) != 0 {
                 bulletDidCollide(bulletNode: firstBody.node as! SKSpriteNode, EnemyNode: secondBody.node as! SKSpriteNode, addScore: asteroidScore)
             }
-            
+        
             if (firstBody.categoryBitMask & bulletCategory) != 0 && (secondBody.categoryBitMask & satelliteCategory) != 0 {
                 bulletDidCollide(bulletNode: firstBody.node as! SKSpriteNode, EnemyNode: secondBody.node as! SKSpriteNode, addScore: satelliteScore)
             }
@@ -346,4 +368,5 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         }
         print(self.children.count)
     }
+
 }

@@ -15,6 +15,10 @@ enum Difficulty {
 }
 
 var gameDifficulty : Difficulty = Difficulty.hard
+let wndow = UIApplication.shared.keyWindow
+
+var topSafeArea: CGFloat = 0
+var bottomSafeArea: CGFloat = 0
 
 class StartViewController: UIViewController {
 
