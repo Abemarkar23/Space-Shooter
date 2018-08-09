@@ -23,6 +23,8 @@ let playerCategory : UInt32 =     0x1 << 3
 var LivesArray = [SKSpriteNode]();
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
+    let tutorialTextArray : [String] = ["Drag Ship Around the screen", "Hitting Enemies is Game Over", "Ending touch with screen pauses the game", "If Enemy Passes your view, you lose one life indicated in the top left corner"]
+
     let starField : SKEmitterNode = SKEmitterNode(fileNamed: "StarBackground")!
     
     var gameState : Bool = true
@@ -80,7 +82,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreatePlayer(){
         player = Player()
-        player.createPlayer(playerYPosition: Int(-0.4122938531 * self.frame.size.height))
+        player.createPlayer(playerYPosition: Int(self.frame.minY - player.size.height - 10), intendedPosition: CGPoint(x: 0, y: self.frame.minY + player.size.height + 20))
         self.addChild(player)
     }
     
@@ -133,14 +135,14 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             newLife.position = CGPoint(x: self.frame.maxX - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.height, y: self.frame.maxY-newLife.size.height/2)
             if UIDevice().userInterfaceIdiom == .phone {
                 switch UIScreen.main.nativeBounds.height {
-                case 1136:
-                    print("iPhone 5 or 5S or 5C")
-                case 1334:
-                    print("iPhone 6/6S/7/8")
-                case 2208:
-                    print("iPhone 6+/6S+/7+/8+")
+//                case 1136:
+//                  iPhone 5 or 5S or 5C
+//                case 1334:
+//                  iPhone 6/6S/7/8
+//                case 2208:
+//                  iPhone 6+/6S+/7+/8+
                 case 2436:
-                    print("iPhone X")
+//                  iPhone X
                     newLife.position = CGPoint(x: self.frame.maxX - newLife.size.width - 10, y: self.frame.maxY - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.width/2)
                 default:
                     print("unknown")
@@ -195,8 +197,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreateScoreBoard() {
         scoreLabel = SKLabelNode(text: "Score : 0")
-        
-        scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: frame.midX, y: (self.frame.maxY-120)), layoutWidth: self.frame.size.width-30)
+        scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.maxY+50) , layoutWidth: self.frame.size.width-30)
+        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: (self.frame.maxY-120)), duration: 2))
         self.addChild(scoreLabel)
     }
     
@@ -255,8 +257,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         bulletTimer = Timer.scheduledTimer(timeInterval: bulletProductionRate, target: self, selector: #selector(CreateNewBullet), userInfo: nil, repeats: true)
         satelliteTimer = Timer.scheduledTimer(timeInterval: satelliteProductionRate, target: self, selector: #selector(CreateNewSatellite) , userInfo: nil, repeats: true)
     }
-    
-    
     
     func StartNewGame() {
         setUpPhysics()
@@ -366,7 +366,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         if LivesArray.count == 0 {
             GameOver()
         }
-        print(self.children.count)
     }
 
 }
