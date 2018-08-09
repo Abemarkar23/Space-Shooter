@@ -26,11 +26,11 @@ var asteroidTimer : Timer!
 var asteroidScore : Int = 5
 
 extension SKSpriteNode {
-    func SatelliteEnemySettings(screenHeight : CGFloat, screenWidth : CGFloat) {
-            self.position = setEnemyOrigin(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+    func SatelliteEnemySettings(screenMaxX : CGFloat, screenMinX : CGFloat, screenMaxY : CGFloat, screenMinY : CGFloat) {
+            self.position = setEnemyOrigin(screenMaxX: screenMaxX, screenMinX: screenMinX, screenMaxY: screenMaxY, enemySprite: self)
             self.name = "Enemy"
         
-            let satelliteDestination : CGPoint = setEnemyDestination(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+            let satelliteDestination : CGPoint = setEnemyDestination(screenMaxX: screenMaxX, screenMinX: screenMinX, screenMinY: screenMinY, enemySprite: self)
             let moveSatelliteToTop : SKAction = SKAction.move(to: satelliteDestination, duration: satelliteSpeed)
             var actionArray = [SKAction]()
             
@@ -51,12 +51,12 @@ extension SKSpriteNode {
             self.physicsBody?.collisionBitMask = 0
         }
     
-    func AsteroidEnemySettings(screenHeight : CGFloat, screenWidth : CGFloat, player : SKSpriteNode){
+    func AsteroidEnemySettings(screenMaxX : CGFloat, screenMinX : CGFloat, screenMaxY : CGFloat, screenMinY : CGFloat,  player : SKSpriteNode){
         self.scale(to: CGSize(width: player.size.height, height: player.size.height))
-        self.position = setEnemyOrigin(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+        self.position = setEnemyOrigin(screenMaxX: screenMaxX, screenMinX: screenMinX, screenMaxY: screenMaxY, enemySprite: self)
         self.name = "Enemy"
         
-        let asteroidDestination : CGPoint = setEnemyDestination(screenHeight: screenHeight, screenWidth: screenWidth, enemySprite: self)
+        let asteroidDestination : CGPoint = setEnemyDestination(screenMaxX: screenMaxX, screenMinX: screenMinX, screenMinY: screenMinY, enemySprite: self)
         let moveAsteroidToBottom : SKAction = SKAction.move(to: asteroidDestination, duration: asteroidSpeed)
         
         var actionArray = [SKAction]()
@@ -80,17 +80,17 @@ extension SKSpriteNode {
     }
 }
 
-func setEnemyOrigin(screenHeight : CGFloat, screenWidth : CGFloat, enemySprite : SKSpriteNode) -> CGPoint {
-    let randomStartNumber = GKRandomDistribution(lowestValue: Int(-1 * screenWidth/2), highestValue: Int(screenWidth/2))
+func setEnemyOrigin(screenMaxX : CGFloat, screenMinX : CGFloat, screenMaxY : CGFloat, enemySprite : SKSpriteNode) -> CGPoint {
+    let randomStartNumber = GKRandomDistribution(lowestValue: Int(screenMinX + 5), highestValue: Int(screenMaxX - 5))
     let randomXPos = CGFloat(randomStartNumber.nextInt())
-    let startPos : CGPoint = CGPoint(x: randomXPos, y: screenHeight/2 + enemySprite.size.height)
+    let startPos : CGPoint = CGPoint(x: randomXPos, y: screenMaxY + enemySprite.size.height)
     return startPos
 }
     
-func setEnemyDestination(screenHeight : CGFloat, screenWidth : CGFloat, enemySprite : SKSpriteNode) -> CGPoint {
-    let randomEndNumber = GKRandomDistribution(lowestValue: Int(-1 * screenWidth/2), highestValue: Int(screenWidth/2))
+func setEnemyDestination(screenMaxX : CGFloat, screenMinX : CGFloat, screenMinY : CGFloat, enemySprite : SKSpriteNode) -> CGPoint {
+    let randomEndNumber = GKRandomDistribution(lowestValue: Int(screenMinX + 5), highestValue: Int(screenMaxX - 5))
     let randomXPos = CGFloat(randomEndNumber.nextInt())
-    let endPos : CGPoint = CGPoint(x: randomXPos, y: -1 * screenHeight/2 - enemySprite.size.height)
+    let endPos : CGPoint = CGPoint(x: randomXPos, y: screenMinY  - enemySprite.size.height)
     return endPos
 }
 

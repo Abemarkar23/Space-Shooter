@@ -38,7 +38,6 @@ extension SKLabelNode {
         self.preferredMaxLayoutWidth = layoutWidth
         self.numberOfLines = 2
         self.verticalAlignmentMode = SKLabelVerticalAlignmentMode.baseline
-        
     }
 }
 

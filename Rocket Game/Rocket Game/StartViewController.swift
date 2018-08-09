@@ -13,6 +13,10 @@ enum Difficulty {
     case easy
     case medium
 }
+var topInset : CGFloat!
+var bottomInset : CGFloat!
+
+var isDarkMode : Bool = true
 
 var gameDifficulty : Difficulty = Difficulty.hard
 let wndow = UIApplication.shared.keyWindow
@@ -21,11 +25,22 @@ var topSafeArea: CGFloat = 0
 var bottomSafeArea: CGFloat = 0
 
 class StartViewController: UIViewController {
-
+    
+    override func viewDidLayoutSubviews() {
+        print(view.safeAreaInsets.bottom)
+        topInset = view.safeAreaInsets.top
+        
+    }
+    
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setLabels()
         StartButton.applyAdditionalButtonDesign()
+        if isDarkMode == true {
+            view.backgroundColor = .black
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -20,6 +20,8 @@ let asteroidCategory : UInt32 =   0x1 << 1
 let satelliteCategory : UInt32 =  0x1 << 2
 let playerCategory : UInt32 =     0x1 << 3
 
+let shipFlame : SKEmitterNode = SKEmitterNode(fileNamed: "ShipFlame")!
+
 var LivesArray = [SKSpriteNode]();
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
@@ -83,19 +85,21 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func CreatePlayer(){
         player = Player()
         player.createPlayer(playerYPosition: Int(self.frame.minY - player.size.height - 10), intendedPosition: CGPoint(x: 0, y: self.frame.minY + player.size.height + 20))
+        shipFlame.position = CGPoint(x: player.frame.midX, y: player.frame.minY)
+        self.addChild(shipFlame)
         self.addChild(player)
     }
     
     @objc func CreateNewSatellite() {
         let satellite : SKSpriteNode = SKSpriteNode(imageNamed: possibleSatelliteImage[Int(arc4random_uniform(2))])
-        satellite.SatelliteEnemySettings(screenHeight: self.frame.height, screenWidth: self.frame.width)
+        satellite.SatelliteEnemySettings(screenMaxX: self.frame.maxX, screenMinX: self.frame.minX, screenMaxY: self.frame.maxY, screenMinY: self.frame.minY)
         self.addChild(satellite)
         
     }
     
     @objc func CreateNewAsteroid() {
         let asteroid : SKSpriteNode = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
-        asteroid.AsteroidEnemySettings(screenHeight: self.frame.height, screenWidth: self.frame.width, player: player)
+        asteroid.AsteroidEnemySettings(screenMaxX: self.frame.maxX, screenMinX: self.frame.minX, screenMaxY: self.frame.maxY, screenMinY: self.frame.minY, player: player)
         self.addChild(asteroid)
     }
     
@@ -198,7 +202,9 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func CreateScoreBoard() {
         scoreLabel = SKLabelNode(text: "Score : 0")
         scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.maxY+50) , layoutWidth: self.frame.size.width-30)
-        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: (self.frame.maxY-120)), duration: 2))
+//        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: (self.frame.maxY-120)), duration: 2))
+        print(topInset)
+        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: self.frame.maxY - 120), duration: 2))
         self.addChild(scoreLabel)
     }
     
@@ -348,7 +354,15 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
                 secondBody = contact.bodyA
             }
             if contact.bodyA.categoryBitMask == playerCategory  {
-                GameOver()
+                RemoveOneLife()
+                let enemyWithPlayer = (contact.bodyB.node as! SKSpriteNode)
+                let explosion = SKEmitterNode(fileNamed: "Explosion")!
+                explosion.position = enemyWithPlayer.position
+                self.run(SKAction.wait(forDuration: 2)) {
+                    explosion.removeFromParent()
+                }
+                self.addChild(explosion)
+                enemyWithPlayer.removeFromParent()
                 
             }
             
@@ -363,9 +377,10 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if LivesArray.count == 0 {
+        if LivesArray.count <= 0 {
             GameOver()
         }
+        shipFlame.position = CGPoint(x: player.frame.midX, y: player.frame.minY)
     }
 
 }
