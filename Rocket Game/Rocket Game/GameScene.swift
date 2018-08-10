@@ -20,11 +20,12 @@ let asteroidCategory : UInt32 =   0x1 << 1
 let satelliteCategory : UInt32 =  0x1 << 2
 let playerCategory : UInt32 =     0x1 << 3
 
-let shipFlame : SKEmitterNode = SKEmitterNode(fileNamed: "ShipFlame")!
+
 
 var LivesArray = [SKSpriteNode]();
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
+    let shipFlame : SKEmitterNode = SKEmitterNode(fileNamed: "ShipFlame")!
     let tutorialTextArray : [String] = ["Drag Ship Around the screen", "Hitting Enemies is Game Over", "Ending touch with screen pauses the game", "If Enemy Passes your view, you lose one life indicated in the top left corner"]
 
     let starField : SKEmitterNode = SKEmitterNode(fileNamed: "StarBackground")!
@@ -164,6 +165,9 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         if LivesArray.count >= 1 {
             LivesArray.last?.removeFromParent()
             LivesArray.removeLast()
+        }
+        if LivesArray.count == 0 {
+            GameScene().GameOver()
         }
     }
     
