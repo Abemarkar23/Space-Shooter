@@ -24,7 +24,12 @@ let playerCategory : UInt32 =     0x1 << 3
 
 var LivesArray = [SKSpriteNode]();
 
+
+
 class GameScene : SKScene, SKPhysicsContactDelegate {
+    
+    var locationDict : [String : CGFloat] = [:]
+    
     let shipFlame : SKEmitterNode = SKEmitterNode(fileNamed: "ShipFlame")!
     let tutorialTextArray : [String] = ["Drag Ship Around the screen", "Hitting Enemies is Game Over", "Ending touch with screen pauses the game", "If Enemy Passes your view, you lose one life indicated in the top left corner"]
 
@@ -76,6 +81,15 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func setConstraints() {
+        locationDict["Top"] = (view?.scene?.frame.maxY)!/2 + 150
+        locationDict["Middle"] = (view?.frame.minY)! // works for X value as well
+        locationDict["Bottom"] = locationDict["Top"]! * -1
+        
+        locationDict["Right"] = (view?.frame.maxX)!
+        locationDict["Left"] = locationDict["Right"]! * -1
+    }
+    
     func UpdateAverage() {
         numberOfGames += 1
         cumulativeScore += UInt32(score)
@@ -85,7 +99,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreatePlayer(){
         player = Player()
-        player.createPlayer(playerYPosition: Int(self.frame.minY - player.size.height - 10), intendedPosition: CGPoint(x: 0, y: self.frame.minY + player.size.height + 20))
+        print((view?.scene?.frame.maxY)!)
+        player.createPlayer(playerYPosition: Int(self.frame.minY - player.size.height - 10), intendedPosition: CGPoint(x: locationDict["Middle"]!, y: locationDict["Bottom"]! + 50))
         shipFlame.position = CGPoint(x: player.frame.midX, y: player.frame.minY)
         self.addChild(shipFlame)
         self.addChild(player)
@@ -137,7 +152,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         
         for life in 0...2 {
             let newLife = SKSpriteNode(imageNamed: "spaceShipImage")
-            newLife.position = CGPoint(x: self.frame.maxX - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.height, y: self.frame.maxY-newLife.size.height/2)
+            newLife.position = CGPoint(x: self.frame.maxX - (CGFloat(life) * (newLife.size.width/10 * 7)) - newLife.size.height, y: locationDict["Top"]! - 20) // self.frame.maxY-newLife.size.height/2
             if UIDevice().userInterfaceIdiom == .phone {
                 switch UIScreen.main.nativeBounds.height {
 //                case 1136:
@@ -160,24 +175,21 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             self.addChild(newLife)
         }
     }
-    
     func RemoveOneLife() {
         if LivesArray.count >= 1 {
             LivesArray.last?.removeFromParent()
             LivesArray.removeLast()
         }
         if LivesArray.count == 0 {
-            GameScene().GameOver()
+            update(1)
         }
     }
-    
     func GameOver(){
         self.isPaused = true
         gameState = false
         self.removeAllChildren()
-        
         GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: self.frame.midX, y: frame.midY), layoutWidth: self.frame.size.width)
-        PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.minY+110), layoutWidth: self.frame.size.width/2)
+        PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: self.frame.midX, y: locationDict["Bottom"]!+110), layoutWidth: self.frame.size.width/2)
         
         scoreLabel.position = GameOverLabel.position
         scoreLabel.position.y -= 35
@@ -206,9 +218,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func CreateScoreBoard() {
         scoreLabel = SKLabelNode(text: "Score : 0")
         scoreLabel.applyAdditionalSKLabelDesign(labelSize: 50, labelPosition: CGPoint(x: self.frame.midX, y: self.frame.maxY+50) , layoutWidth: self.frame.size.width-30)
-//        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: (self.frame.maxY-120)), duration: 2))
-        print(topInset)
-        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: self.frame.maxY - 120), duration: 2))
+        scoreLabel.run(SKAction.move(to: CGPoint(x: self.frame.midX, y: locationDict["Top"]!  - player.size.height - 20), duration: 2))
         self.addChild(scoreLabel)
     }
     
@@ -269,6 +279,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     }
     
     func StartNewGame() {
+        setConstraints()
         setUpPhysics()
         CreatePlayer()
         CreateScoreBoard()
