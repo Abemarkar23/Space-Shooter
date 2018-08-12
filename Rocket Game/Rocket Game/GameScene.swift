@@ -187,7 +187,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func GameOver(){
         self.isPaused = true
         gameState = false
-        self.removeAllChildren()
+        self.removeAllChildren() // hi
         GameOverLabel.applyAdditionalSKLabelDesign(labelSize: 70, labelPosition: CGPoint(x: self.frame.midX, y: frame.midY), layoutWidth: self.frame.size.width)
         PressQuitLabel.applyAdditionalSKLabelDesign(labelSize: 40, labelPosition: CGPoint(x: self.frame.midX, y: locationDict["Bottom"]!+110), layoutWidth: self.frame.size.width/2)
         
