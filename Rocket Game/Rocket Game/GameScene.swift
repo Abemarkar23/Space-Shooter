@@ -24,7 +24,7 @@ let playerCategory : UInt32 =     0x1 << 3
 
 var LivesArray = [SKSpriteNode]();
 
-
+let bulletSpeed : TimeInterval = 1
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
     
@@ -39,7 +39,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     var player : Player!
     
-    let bulletSpeed : TimeInterval = 1
+    
     var bulletProductionRate : TimeInterval = 0.50
     
     var scoreLabel : SKLabelNode!
@@ -98,7 +98,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func CreatePlayer(){
         player = Player()
-        print((view?.scene?.frame.maxY)!)
         player.createPlayer(playerYPosition: Int(self.frame.minY - player.size.height - 10), intendedPosition: CGPoint(x: locationDict["Middle"]!, y: locationDict["Bottom"]! + 50))
         shipFlame.position = CGPoint(x: player.frame.midX, y: player.frame.minY)
         self.addChild(shipFlame)
@@ -115,6 +114,12 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         let asteroid : SKSpriteNode = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
         asteroid.AsteroidEnemySettings(screenMaxX: locationDict["Right"]!/2, screenMinX: locationDict["Left"]!/2, screenMaxY: locationDict["Top"]!, screenMinY: locationDict["Bottom"]!, player: player)
         self.addChild(asteroid)
+    }
+    
+    func SpawnBullet() {
+        let bullet = Bullet()
+        bullet.createBullet(player: player, topYCoor: locationDict["Top"]!)
+        self.addChild(bullet)
     }
     
     func startTimers() {
@@ -138,34 +143,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         self.run(SKAction.repeatForever(createNewBullet), withKey: "Bullet")
     }
     
-    func SpawnBullet() {
-        
-        let bulletOrigin : CGPoint = CGPoint(x: player.position.x, y: player.position.y+player.size.height/2)
-        let moveBulletUp : SKAction = SKAction.move(to: CGPoint(x: bulletOrigin.x, y: self.size.height/2), duration: bulletSpeed)
-        
-        var actionArray = [SKAction]()
-        
-        actionArray.append(moveBulletUp)
-        actionArray.append(SKAction.removeFromParent())
-        
-        var bullet : SKSpriteNode
-        
-        
-        bullet = SKSpriteNode(imageNamed: "bulletImage")
-        bullet.name = "Bullet"
-        bullet.position = bulletOrigin
-        bullet.run(SKAction.sequence(actionArray))
-        
-        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.size)
-        bullet.physicsBody?.categoryBitMask = bulletCategory
-        bullet.physicsBody?.contactTestBitMask = asteroidCategory + satelliteCategory
-        bullet.physicsBody?.collisionBitMask = 0
-        bullet.physicsBody?.usesPreciseCollisionDetection = true
-        bullet.physicsBody?.isDynamic = true
-        bullet.zPosition = 1
-        
-        self.addChild(bullet)
-    }
+
     
     func CreateLives() {
         
