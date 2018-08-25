@@ -92,30 +92,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Space Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-PD-O1r">
-                                <rect key="frame" x="16" y="39" width="343" height="63"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-PD-O1r">
+                                <rect key="frame" x="16" y="39" width="343" height="40"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="35"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="High Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZo-Mw-Fac">
-                                <rect key="frame" x="16" y="620" width="343" height="27"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="17"/>
-                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Previous Score: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBO-BP-ubg">
-                                <rect key="frame" x="16" y="110" width="343" height="91"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Score: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBO-BP-ubg">
+                                <rect key="frame" x="16" y="110" width="343" height="23"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="20"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuU-De-da9">
-                                <rect key="frame" x="16" y="297" width="343" height="52"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuU-De-da9">
+                                <rect key="frame" x="16" y="313" width="343" height="41"/>
                                 <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="25"/>
                                 <state key="normal" title="Start">
@@ -126,25 +116,60 @@
                                     <segue destination="BV1-FR-VrT" kind="show" id="Kah-DU-OLE"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1UD-jq-y2W" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wnf-is-enf"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZo-Mw-Fac">
+                                <rect key="frame" x="16" y="367" width="343" height="20"/>
+                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="17"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wuU-De-da9" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="3fy-iL-bYu"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="top" secondItem="gG1-PD-O1r" secondAttribute="bottom" constant="31.5" id="7Bf-kx-CmK"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="wuU-De-da9" secondAttribute="trailing" constant="16" id="9sA-Ak-jK9"/>
+                            <constraint firstItem="gG1-PD-O1r" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="KaW-de-kgL"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="top" secondItem="wuU-De-da9" secondAttribute="bottom" constant="13" id="LFt-SK-Yo9"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="gG1-PD-O1r" secondAttribute="trailing" constant="16" id="MLy-oi-v6K"/>
+                            <constraint firstItem="gG1-PD-O1r" firstAttribute="top" secondItem="y2w-55-6bM" secondAttribute="top" constant="19" id="Nsz-0o-vna"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="PTj-uD-eHS"/>
+                            <constraint firstItem="wuU-De-da9" firstAttribute="centerY" secondItem="wHD-ua-IFh" secondAttribute="centerY" id="Q7O-lw-cZT"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="QJb-ul-LcI"/>
+                            <constraint firstItem="wuU-De-da9" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="YKP-tS-gaf"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="FBO-BP-ubg" secondAttribute="trailing" constant="16" id="YNc-xU-nXs"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="ZQK-LF-OP3"/>
+                            <constraint firstItem="1UD-jq-y2W" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="cOI-bW-EbT"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="dIe-ov-Ui0"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="1UD-jq-y2W" secondAttribute="trailing" id="pTU-vb-Eqq"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="vZo-Mw-Fac" secondAttribute="trailing" constant="16" id="pxy-JT-rdH"/>
+                            <constraint firstItem="1UD-jq-y2W" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" id="qFY-c4-gmP"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="bottom" secondItem="1UD-jq-y2W" secondAttribute="bottom" id="qFo-Bs-ssG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="y2w-55-6bM"/>
                     </view>
                     <connections>
                         <outlet property="HighScoreLabel" destination="vZo-Mw-Fac" id="w9F-Po-0VB"/>
                         <outlet property="PreviousScoreLabel" destination="FBO-BP-ubg" id="4NN-n4-b8a"/>
                         <outlet property="StartButton" destination="wuU-De-da9" id="VDI-dU-WKl"/>
+                        <outlet property="myBanner" destination="1UD-jq-y2W" id="ukh-nT-Sj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDe-rR-LaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-898.39999999999998" y="116.49175412293854"/>
+            <point key="canvasLocation" x="-879.20000000000005" y="115.59220389805098"/>
         </scene>
     </scenes>
     <resources>
         <image name="home" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MIO-jR-4Cw"/>
+        <segue reference="JK9-Au-WIM"/>
     </inferredMetricsTieBreakers>
 </document>

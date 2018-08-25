@@ -14,6 +14,8 @@
 		A41029C32100F93B007BF95C /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41029C22100F93B007BF95C /* Enemy.swift */; };
 		A4160EC9210D4E7D00411B0B /* kenvector_future.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4160EC8210D4E7D00411B0B /* kenvector_future.ttf */; };
 		A4160ECB210D6B9B00411B0B /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */; };
+		A43A9810212BB0C200FB425C /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43A980F212BB0C200FB425C /* Bullet.swift */; };
+		A43A9812212BC33600FB425C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A43A9811212BC33500FB425C /* GoogleService-Info.plist */; };
 		A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */; };
 		A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515CF820CF4E2F009B1AB1 /* Actions.sks */; };
 		A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */; };
@@ -28,6 +30,7 @@
 		A4B035C6211BD6AE0000EA49 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B035C5211BD6AE0000EA49 /* SettingsViewController.swift */; };
 		A4C85CF5211CA5AB00F29E9F /* ShipFlame.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4C85CF4211CA5AB00F29E9F /* ShipFlame.sks */; };
 		A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */; };
+		D09649E296BBCCAECCFF639F /* libPods-Rocket Game.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8611D5969F186CC7A8DA60CF /* libPods-Rocket Game.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07F5D513C970077226BF89AC /* Pods-Rocket Game.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rocket Game.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rocket Game/Pods-Rocket Game.release.xcconfig"; sourceTree = "<group>"; };
+		552594116748760A960F55AA /* Pods-Rocket Game.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rocket Game.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rocket Game/Pods-Rocket Game.debug.xcconfig"; sourceTree = "<group>"; };
+		8611D5969F186CC7A8DA60CF /* libPods-Rocket Game.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Rocket Game.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A408FFC620D3390D0039C0E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A408FFCF20D72B8A0039C0E8 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		A41029BE20FFE421007BF95C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -55,6 +61,8 @@
 		A41029C22100F93B007BF95C /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		A4160EC8210D4E7D00411B0B /* kenvector_future.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future.ttf; sourceTree = "<group>"; };
 		A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
+		A43A980F212BB0C200FB425C /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		A43A9811212BC33500FB425C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A4515CF120CF4E2F009B1AB1 /* Rocket Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rocket Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4515CF820CF4E2F009B1AB1 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -82,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09649E296BBCCAECCFF639F /* libPods-Rocket Game.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +111,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		382A6663BED548A3FFAAB537 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8611D5969F186CC7A8DA60CF /* libPods-Rocket Game.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		715913E00D3DDAF73549095A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				552594116748760A960F55AA /* Pods-Rocket Game.debug.xcconfig */,
+				07F5D513C970077226BF89AC /* Pods-Rocket Game.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A4160EC7210D4E1F00411B0B /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +144,8 @@
 				A4515D0E20CF4E31009B1AB1 /* Rocket GameTests */,
 				A4515D1920CF4E31009B1AB1 /* Rocket GameUITests */,
 				A4515CF220CF4E2F009B1AB1 /* Products */,
+				715913E00D3DDAF73549095A /* Pods */,
+				382A6663BED548A3FFAAB537 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,6 +166,7 @@
 				A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */,
 				A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */,
 				A41029BE20FFE421007BF95C /* Player.swift */,
+				A43A980F212BB0C200FB425C /* Bullet.swift */,
 				A41029C22100F93B007BF95C /* Enemy.swift */,
 				A41029C021004A9D007BF95C /* Formating.swift */,
 				A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */,
@@ -151,6 +180,7 @@
 				A4515CFE20CF4E2F009B1AB1 /* Main.storyboard */,
 				A4515D0320CF4E31009B1AB1 /* LaunchScreen.storyboard */,
 				A4515D0620CF4E31009B1AB1 /* Info.plist */,
+				A43A9811212BC33500FB425C /* GoogleService-Info.plist */,
 				A408FFC620D3390D0039C0E8 /* Assets.xcassets */,
 				A4B035C2211BD3450000EA49 /* SpaceGame.xcdatamodeld */,
 			);
@@ -182,6 +212,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A4515D1F20CF4E31009B1AB1 /* Build configuration list for PBXNativeTarget "Rocket Game" */;
 			buildPhases = (
+				96D78BB7EC401A3334B4E8EA /* [CP] Check Pods Manifest.lock */,
 				A4515CED20CF4E2F009B1AB1 /* Sources */,
 				A4515CEE20CF4E2F009B1AB1 /* Frameworks */,
 				A4515CEF20CF4E2F009B1AB1 /* Resources */,
@@ -287,6 +318,7 @@
 				A4C85CF5211CA5AB00F29E9F /* ShipFlame.sks in Resources */,
 				A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */,
 				A408FFC820D3390D0039C0E8 /* Assets.xcassets in Resources */,
+				A43A9812212BC33600FB425C /* GoogleService-Info.plist in Resources */,
 				A408FFD020D72B8A0039C0E8 /* Explosion.sks in Resources */,
 				A4160EC9210D4E7D00411B0B /* kenvector_future.ttf in Resources */,
 			);
@@ -308,6 +340,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		96D78BB7EC401A3334B4E8EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rocket Game-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A4515CED20CF4E2F009B1AB1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -320,6 +373,7 @@
 				A4B035C4211BD3450000EA49 /* SpaceGame.xcdatamodeld in Sources */,
 				A41029BF20FFE422007BF95C /* Player.swift in Sources */,
 				A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */,
+				A43A9810212BB0C200FB425C /* Bullet.swift in Sources */,
 				A41029C121004A9D007BF95C /* Formating.swift in Sources */,
 				A4B035C6211BD6AE0000EA49 /* SettingsViewController.swift in Sources */,
 			);
@@ -492,6 +546,7 @@
 		};
 		A4515D2020CF4E31009B1AB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 552594116748760A960F55AA /* Pods-Rocket Game.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -510,6 +565,7 @@
 		};
 		A4515D2120CF4E31009B1AB1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07F5D513C970077226BF89AC /* Pods-Rocket Game.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

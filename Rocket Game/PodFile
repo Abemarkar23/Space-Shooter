@@ -1,0 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '11.3'
+
+target 'Rocket Game' do
+	pod 'Firebase/Core'
+	pod 'Firebase/AdMob'
+end
