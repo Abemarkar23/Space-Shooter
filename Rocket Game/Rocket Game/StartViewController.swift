@@ -25,34 +25,24 @@ let wndow = UIApplication.shared.keyWindow
 
 var topSafeArea: CGFloat = 0
 var bottomSafeArea: CGFloat = 0
+var currencyBackgroundWidth : CGFloat = 0
 
 class StartViewController: UIViewController, GADBannerViewDelegate {
     
     override func viewDidLayoutSubviews() {
         print(view.safeAreaInsets.bottom)
         topInset = view.safeAreaInsets.top
-        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabels()
         StartButton.applyAdditionalButtonDesign()
+        currencyBackground.applyAdditionalViewDesign()
+        currencyBackgroundWidth = currencyBackground.frame.width
         if isDarkMode == true {
             view.backgroundColor = .black
         }
-        
-        let request = GADRequest()
-        request.testDevices = [kGADSimulatorID]
-        
-//        myBanner.adUnitID = "ca-app-pub-6099571360203191/5211532454"
-        myBanner.adUnitID = "ca-app-pub-6099571360203191/9767206208"
-
-        myBanner.rootViewController = self
-        myBanner.delegate = self
-        myBanner.load(request)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,13 +54,12 @@ class StartViewController: UIViewController, GADBannerViewDelegate {
     @IBOutlet weak var PreviousScoreLabel: UILabel!
     
     @IBOutlet weak var StartButton: UIButton!
-    
-    @IBOutlet weak var myBanner: GADBannerView!
-    
+
     @IBAction func SelectDifficulty(_ sender: UIButton) {
         gameDifficulty = Difficulty.easy
         }
-    
+    @IBOutlet weak var currencyBackground: UIView!
+
     func setLabels() {
         if highScore != nil {
             HighScoreLabel.text = "High Score: \(highScore!)"

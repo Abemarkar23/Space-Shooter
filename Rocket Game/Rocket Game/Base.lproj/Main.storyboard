@@ -42,47 +42,50 @@
             </objects>
             <point key="canvasLocation" x="-28" y="116"/>
         </scene>
-        <!--Settings View Controller-->
-        <scene sceneID="Q9D-13-LYf">
+        <!--Shop View Controller-->
+        <scene sceneID="HUt-j7-6d3">
             <objects>
-                <viewController id="Uz6-gj-vQD" customClass="SettingsViewController" customModule="Rocket_Game" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Iyw-pb-eOn">
+                <viewController id="TSw-FE-Kgz" customClass="ShopViewController" customModule="Rocket_Game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1cm-WV-IDE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGK-U5-Tn0">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="home">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="rAj-Ad-0pr" kind="show" id="MIO-jR-4Cw"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQh-AQ-sVi">
-                                <rect key="frame" x="16" y="58" width="343" height="63"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="35"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEp-xn-njt" userLabel="CurrencyBackground">
+                                <rect key="frame" x="41" y="28" width="307" height="33"/>
+                                <color key="backgroundColor" red="1" green="0.80784313730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin" translatesAutoresizingMaskIntoConstraints="NO" id="WCl-Ov-4uN">
+                                <rect key="frame" x="20" y="20" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IK2-Ea-Y4k"/>
+                                    <constraint firstAttribute="width" constant="50" id="tHb-HD-S9e"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X59-Ct-e6w">
+                                <rect key="frame" x="85" y="35" width="263" height="20"/>
+                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kpK-vN-daG">
-                                <rect key="frame" x="91" y="129" width="192" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Dark Mode"/>
-                                    <segment title="Light Mode"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <viewLayoutGuide key="safeArea" id="XAF-X4-40Q"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KEp-xn-njt" firstAttribute="leading" secondItem="BAx-v2-fne" secondAttribute="leading" constant="41" id="0nD-bg-7Eu"/>
+                            <constraint firstItem="X59-Ct-e6w" firstAttribute="leading" secondItem="WCl-Ov-4uN" secondAttribute="trailing" constant="15" id="7Xs-CV-HCP"/>
+                            <constraint firstItem="BAx-v2-fne" firstAttribute="trailing" secondItem="X59-Ct-e6w" secondAttribute="trailing" constant="27" id="9uC-WU-uE5"/>
+                            <constraint firstItem="WCl-Ov-4uN" firstAttribute="top" secondItem="BAx-v2-fne" secondAttribute="top" id="K9l-bb-b6h"/>
+                            <constraint firstItem="KEp-xn-njt" firstAttribute="top" secondItem="BAx-v2-fne" secondAttribute="top" constant="8" id="Lxf-5h-7XU"/>
+                            <constraint firstItem="X59-Ct-e6w" firstAttribute="centerY" secondItem="WCl-Ov-4uN" secondAttribute="centerY" id="Wml-nQ-Dqo"/>
+                            <constraint firstItem="BAx-v2-fne" firstAttribute="top" secondItem="KEp-xn-njt" secondAttribute="bottom" constant="-41" id="YQt-9e-emw"/>
+                            <constraint firstItem="BAx-v2-fne" firstAttribute="trailing" secondItem="KEp-xn-njt" secondAttribute="trailing" constant="27" id="mVf-Kz-c5X"/>
+                            <constraint firstItem="WCl-Ov-4uN" firstAttribute="leading" secondItem="BAx-v2-fne" secondAttribute="leading" constant="20" id="wTZ-G4-csk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BAx-v2-fne"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Cc5-Aa-yFO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cy6-If-wyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-916" y="-699"/>
+            <point key="canvasLocation" x="-860.86956521739137" y="-600.81521739130437"/>
         </scene>
         <!--GameOverScene-->
         <scene sceneID="Hpg-Z0-Whc">
@@ -93,14 +96,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-PD-O1r">
-                                <rect key="frame" x="16" y="39" width="343" height="40"/>
+                                <rect key="frame" x="48" y="93" width="280" height="40"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="35"/>
-                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Score: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBO-BP-ubg">
-                                <rect key="frame" x="16" y="110" width="343" height="23"/>
-                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="20"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -108,7 +105,7 @@
                                 <rect key="frame" x="16" y="313" width="343" height="41"/>
                                 <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="25"/>
-                                <state key="normal" title="Start">
+                                <state key="normal" title="Play">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -116,15 +113,43 @@
                                     <segue destination="BV1-FR-VrT" kind="show" id="Kah-DU-OLE"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1UD-jq-y2W" customClass="GADBannerView">
-                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Wnf-is-enf"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9M-AH-nfJ">
+                                <rect key="frame" x="16" y="362" width="343" height="41"/>
+                                <color key="backgroundColor" red="1" green="0.81960784313725488" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="25"/>
+                                <state key="normal" title="Store">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="SelectDifficulty:" destination="rAj-Ad-0pr" eventType="touchUpInside" id="dJA-kn-VYZ"/>
+                                    <segue destination="TSw-FE-Kgz" kind="show" id="Ymb-ZT-FC3"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Score: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBO-BP-ubg">
+                                <rect key="frame" x="20" y="135" width="335" height="23"/>
+                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="20"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V5b-4m-Wkc" userLabel="CurrencyBackground">
+                                <rect key="frame" x="34" y="28" width="307" height="35"/>
+                                <color key="backgroundColor" red="1" green="0.80784313725490198" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin" translatesAutoresizingMaskIntoConstraints="NO" id="mUu-he-8KI">
+                                <rect key="frame" x="20" y="20" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="EZO-ZX-GwS"/>
+                                    <constraint firstAttribute="height" constant="50" id="mwn-na-O6x"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeH-aM-aRN">
+                                <rect key="frame" x="78" y="35" width="263" height="20"/>
+                                <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="17"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZo-Mw-Fac">
-                                <rect key="frame" x="16" y="367" width="343" height="20"/>
+                                <rect key="frame" x="16" y="411" width="343" height="41"/>
                                 <fontDescription key="fontDescription" name="KenVector-Future" family="KenVector Future" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -132,25 +157,33 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="V5b-4m-Wkc" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="34" id="1QD-76-T91"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="32F-sk-4RU"/>
                             <constraint firstItem="wuU-De-da9" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="3fy-iL-bYu"/>
-                            <constraint firstItem="FBO-BP-ubg" firstAttribute="top" secondItem="gG1-PD-O1r" secondAttribute="bottom" constant="31.5" id="7Bf-kx-CmK"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="20" id="4Gc-N1-3sb"/>
+                            <constraint firstItem="D9M-AH-nfJ" firstAttribute="top" secondItem="wuU-De-da9" secondAttribute="bottom" constant="8" id="7RY-ap-Ffx"/>
+                            <constraint firstItem="gG1-PD-O1r" firstAttribute="top" secondItem="V5b-4m-Wkc" secondAttribute="bottom" constant="30" id="7fI-uM-trU"/>
+                            <constraint firstItem="V5b-4m-Wkc" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="8o8-do-3qC"/>
                             <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="wuU-De-da9" secondAttribute="trailing" constant="16" id="9sA-Ak-jK9"/>
-                            <constraint firstItem="gG1-PD-O1r" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="KaW-de-kgL"/>
-                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="top" secondItem="wuU-De-da9" secondAttribute="bottom" constant="13" id="LFt-SK-Yo9"/>
-                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="gG1-PD-O1r" secondAttribute="trailing" constant="16" id="MLy-oi-v6K"/>
-                            <constraint firstItem="gG1-PD-O1r" firstAttribute="top" secondItem="y2w-55-6bM" secondAttribute="top" constant="19" id="Nsz-0o-vna"/>
-                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="PTj-uD-eHS"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="height" secondItem="D9M-AH-nfJ" secondAttribute="height" id="Bnx-T0-IPC"/>
+                            <constraint firstItem="V5b-4m-Wkc" firstAttribute="top" secondItem="y2w-55-6bM" secondAttribute="top" constant="8" id="CUR-34-dNL"/>
+                            <constraint firstItem="D9M-AH-nfJ" firstAttribute="width" secondItem="wuU-De-da9" secondAttribute="width" id="Crn-Fp-exp"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="FBO-BP-ubg" secondAttribute="trailing" constant="20" id="F9C-u6-7Qq"/>
+                            <constraint firstItem="mUu-he-8KI" firstAttribute="top" secondItem="y2w-55-6bM" secondAttribute="top" id="M6c-hJ-YgJ"/>
                             <constraint firstItem="wuU-De-da9" firstAttribute="centerY" secondItem="wHD-ua-IFh" secondAttribute="centerY" id="Q7O-lw-cZT"/>
-                            <constraint firstItem="FBO-BP-ubg" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="QJb-ul-LcI"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="U1q-Gz-eDY"/>
+                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="SeH-aM-aRN" secondAttribute="trailing" constant="34" id="UMD-sU-UiU"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="top" secondItem="D9M-AH-nfJ" secondAttribute="bottom" constant="8" id="W2Y-xI-6dm"/>
+                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="width" secondItem="D9M-AH-nfJ" secondAttribute="width" id="X1x-5s-oMe"/>
                             <constraint firstItem="wuU-De-da9" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="YKP-tS-gaf"/>
-                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="FBO-BP-ubg" secondAttribute="trailing" constant="16" id="YNc-xU-nXs"/>
-                            <constraint firstItem="FBO-BP-ubg" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="16" id="ZQK-LF-OP3"/>
-                            <constraint firstItem="1UD-jq-y2W" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="cOI-bW-EbT"/>
-                            <constraint firstItem="vZo-Mw-Fac" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="dIe-ov-Ui0"/>
-                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="1UD-jq-y2W" secondAttribute="trailing" id="pTU-vb-Eqq"/>
-                            <constraint firstItem="y2w-55-6bM" firstAttribute="trailing" secondItem="vZo-Mw-Fac" secondAttribute="trailing" constant="16" id="pxy-JT-rdH"/>
-                            <constraint firstItem="1UD-jq-y2W" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" id="qFY-c4-gmP"/>
-                            <constraint firstItem="y2w-55-6bM" firstAttribute="bottom" secondItem="1UD-jq-y2W" secondAttribute="bottom" id="qFo-Bs-ssG"/>
+                            <constraint firstItem="SeH-aM-aRN" firstAttribute="centerY" secondItem="mUu-he-8KI" secondAttribute="centerY" id="bT4-2G-zFq"/>
+                            <constraint firstItem="D9M-AH-nfJ" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="cq3-dh-Skn"/>
+                            <constraint firstItem="SeH-aM-aRN" firstAttribute="leading" secondItem="mUu-he-8KI" secondAttribute="trailing" constant="8" id="oJS-sA-l6v"/>
+                            <constraint firstItem="D9M-AH-nfJ" firstAttribute="height" secondItem="wuU-De-da9" secondAttribute="height" id="qRv-d7-A9a"/>
+                            <constraint firstItem="V5b-4m-Wkc" firstAttribute="centerY" secondItem="mUu-he-8KI" secondAttribute="centerY" id="uL5-fY-QLO"/>
+                            <constraint firstItem="mUu-he-8KI" firstAttribute="leading" secondItem="y2w-55-6bM" secondAttribute="leading" constant="20" id="umU-lt-dzO"/>
+                            <constraint firstItem="gG1-PD-O1r" firstAttribute="centerX" secondItem="wHD-ua-IFh" secondAttribute="centerX" id="yTd-Ll-wag"/>
+                            <constraint firstItem="FBO-BP-ubg" firstAttribute="top" secondItem="gG1-PD-O1r" secondAttribute="bottom" constant="2" id="ze5-jY-MTp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="y2w-55-6bM"/>
                     </view>
@@ -158,18 +191,16 @@
                         <outlet property="HighScoreLabel" destination="vZo-Mw-Fac" id="w9F-Po-0VB"/>
                         <outlet property="PreviousScoreLabel" destination="FBO-BP-ubg" id="4NN-n4-b8a"/>
                         <outlet property="StartButton" destination="wuU-De-da9" id="VDI-dU-WKl"/>
-                        <outlet property="myBanner" destination="1UD-jq-y2W" id="ukh-nT-Sj7"/>
+                        <outlet property="currencyBackground" destination="V5b-4m-Wkc" id="GKc-jH-kZD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDe-rR-LaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-879.20000000000005" y="115.59220389805098"/>
+            <point key="canvasLocation" x="-880.79999999999995" y="114.69265367316342"/>
         </scene>
     </scenes>
     <resources>
+        <image name="coin" width="148" height="148"/>
         <image name="home" width="50" height="50"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="JK9-Au-WIM"/>
-    </inferredMetricsTieBreakers>
 </document>
