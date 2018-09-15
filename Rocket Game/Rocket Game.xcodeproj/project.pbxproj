@@ -16,7 +16,6 @@
 		A4160ECB210D6B9B00411B0B /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */; };
 		A43A9810212BB0C200FB425C /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43A980F212BB0C200FB425C /* Bullet.swift */; };
 		A43A9812212BC33600FB425C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A43A9811212BC33500FB425C /* GoogleService-Info.plist */; };
-		A446332E2131F67C00456721 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A446332D2131F67C00456721 /* ShopViewController.swift */; };
 		A4515CF520CF4E2F009B1AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */; };
 		A4515CF920CF4E2F009B1AB1 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4515CF820CF4E2F009B1AB1 /* Actions.sks */; };
 		A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4515CFA20CF4E2F009B1AB1 /* GameScene.swift */; };
@@ -63,7 +62,6 @@
 		A4160ECA210D6B9B00411B0B /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
 		A43A980F212BB0C200FB425C /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		A43A9811212BC33500FB425C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A446332D2131F67C00456721 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		A4515CF120CF4E2F009B1AB1 /* Rocket Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rocket Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4515CF420CF4E2F009B1AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4515CF820CF4E2F009B1AB1 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				A41029C021004A9D007BF95C /* Formating.swift */,
 				A4DD1A4620EDF16F0071FE55 /* StartViewController.swift */,
 				A4515CFC20CF4E2F009B1AB1 /* GameViewController.swift */,
-				A446332D2131F67C00456721 /* ShopViewController.swift */,
 				A4515D2C20CF540E009B1AB1 /* GameScene.sks */,
 				A4515CF820CF4E2F009B1AB1 /* Actions.sks */,
 				A408FFCF20D72B8A0039C0E8 /* Explosion.sks */,
@@ -368,7 +365,6 @@
 			files = (
 				A41029C32100F93B007BF95C /* Enemy.swift in Sources */,
 				A4DD1A4720EDF16F0071FE55 /* StartViewController.swift in Sources */,
-				A446332E2131F67C00456721 /* ShopViewController.swift in Sources */,
 				A4515CFB20CF4E2F009B1AB1 /* GameScene.swift in Sources */,
 				A4515CFD20CF4E2F009B1AB1 /* GameViewController.swift in Sources */,
 				A4B035C4211BD3450000EA49 /* SpaceGame.xcdatamodeld in Sources */,

@@ -12,7 +12,7 @@ import CoreMotion
 import UIKit
 
 var latestScore : Int!
-var highScore : Int!
+var highScore : Int = 0
 var average : UInt32 = 0
 
 let bulletCategory : UInt32 =     0x1 << 0
@@ -38,7 +38,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     var gameState : Bool = true
     
     var player : Player!
-    
+    let playerSpeed : Double = 0.2
     
     var bulletProductionRate : TimeInterval = 0.50
     
@@ -81,11 +81,11 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     }
     
     func setConstraints() {
-        locationDict["Top"] = (view?.scene?.frame.maxY)!/2 + 150
+        locationDict["Top"] = self.frame.maxY
         locationDict["Middle"] = (view?.frame.minY)! // works for X value as well
         locationDict["Bottom"] = locationDict["Top"]! * -1
         
-        locationDict["Right"] = (view?.frame.maxX)!
+        locationDict["Right"] = (view?.frame.maxX)! - 5
         locationDict["Left"] = locationDict["Right"]! * -1
     }
     
@@ -106,13 +106,13 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     
     func SpawnSatellite() {
         let satellite : SKSpriteNode = SKSpriteNode(imageNamed: possibleSatelliteImage[Int(arc4random_uniform(2))])
-        satellite.SatelliteEnemySettings(screenMaxX: locationDict["Right"]!/2, screenMinX: locationDict["Left"]!/2, screenMaxY: locationDict["Top"]!, screenMinY: locationDict["Bottom"]!)
+        satellite.SatelliteEnemySettings(screenMaxX: locationDict["Right"]!, screenMinX: locationDict["Left"]!, screenMaxY: locationDict["Top"]!, screenMinY: locationDict["Bottom"]!)
         self.addChild(satellite)
     }
     
     func SpawnAsteroid() {
         let asteroid : SKSpriteNode = SKSpriteNode(imageNamed: possibleAsteroidImage[Int(arc4random_uniform(4))])
-        asteroid.AsteroidEnemySettings(screenMaxX: locationDict["Right"]!/2, screenMinX: locationDict["Left"]!/2, screenMaxY: locationDict["Top"]!, screenMinY: locationDict["Bottom"]!, player: player)
+        asteroid.AsteroidEnemySettings(screenMaxX: locationDict["Right"]!, screenMinX: locationDict["Left"]!, screenMaxY: locationDict["Top"]!, screenMinY: locationDict["Bottom"]!, player: player)
         self.addChild(asteroid)
     }
     
@@ -192,8 +192,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         self.addChild(PressQuitLabel)
         GameOverLabel.text = "Game Over"
         GameOverLabel.isHidden = false
-        
-        if latestScore != nil && score >= latestScore{
+        print(latestScore)
+        if latestScore != nil && highScore <= latestScore{
             highScore = score
         }
         else if latestScore == nil {
@@ -305,7 +305,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         if gameState == true{
             self.isPaused = false
             GamePauseLabel.isHidden = true
-            player.position = (touches.first?.location(in: self))!
+            var movePlayer = SKAction.move(to: (touches.first?.location(in: self))!, duration: playerSpeed)
+            player.run(movePlayer)
         }
     }
     
@@ -316,7 +317,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             if self.isPaused == false {
                 for touch in touches {
                     if touch.location(in: self).y >= self.frame.minY + 10{
-                        player.position = touch.location(in: self)
+                        var movePlayer = SKAction.move(to: (touches.first?.location(in: self))!, duration: playerSpeed)
+                        player.run(movePlayer)
                     }
                 }
             }

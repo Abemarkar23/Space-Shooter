@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import GoogleMobileAds
 
 enum Difficulty {
     case hard
@@ -27,7 +25,7 @@ var topSafeArea: CGFloat = 0
 var bottomSafeArea: CGFloat = 0
 var currencyBackgroundWidth : CGFloat = 0
 
-class StartViewController: UIViewController, GADBannerViewDelegate {
+class StartViewController: UIViewController{
     
     override func viewDidLayoutSubviews() {
         print(view.safeAreaInsets.bottom)
@@ -38,11 +36,6 @@ class StartViewController: UIViewController, GADBannerViewDelegate {
         super.viewDidLoad()
         setLabels()
         StartButton.applyAdditionalButtonDesign()
-        currencyBackground.applyAdditionalViewDesign()
-        currencyBackgroundWidth = currencyBackground.frame.width
-        if isDarkMode == true {
-            view.backgroundColor = .black
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,8 +51,6 @@ class StartViewController: UIViewController, GADBannerViewDelegate {
     @IBAction func SelectDifficulty(_ sender: UIButton) {
         gameDifficulty = Difficulty.easy
         }
-    @IBOutlet weak var currencyBackground: UIView!
-
     func setLabels() {
         if highScore != nil {
             HighScoreLabel.text = "High Score: \(highScore!)"
